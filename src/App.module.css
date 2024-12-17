@@ -1,0 +1,21 @@
+.main {
+  background-color: pink;
+  margin: 0 auto;
+  min-height: 100svh;
+  max-height: 100svh;
+  max-width: 60rem;
+  padding: 2rem;
+}
+
+.stave {
+  display: grid;
+  gap: 1rem;
+}
+
+.line {
+  background-color: black;
+  height: 4px;
+  width: 100%;
+  border-style: none;
+  margin: 0;
+}

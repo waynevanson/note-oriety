@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       solid-js:
         specifier: ^1.9.3
         version: 1.9.3
+      vexflow:
+        specifier: ^4.2.5
+        version: 4.2.5
     devDependencies:
       typescript:
         specifier: ~5.6.3
@@ -477,6 +483,9 @@ packages:
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
+  normalize.css@8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
+
   parse5@7.2.1:
     resolution: {integrity: sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==}
 
@@ -531,6 +540,9 @@ packages:
 
   validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
+
+  vexflow@4.2.5:
+    resolution: {integrity: sha512-+P+V2VWFyKcpW4Pwbs0p7nwICRQCzLWvkiPi4RpFlMXh/MRsiN1r7X6yvl1WauoJ4J6pVsnCzTAhC4m1ASlTng==}
 
   vite-plugin-solid@2.11.0:
     resolution: {integrity: sha512-G+NiwDj4EAeUE0wt3Ur9f+Lt9oMUuLd0FIxYuqwJSqRacKQRteCwUFzNy8zMEt88xWokngQhiFjfJMhjc1fDXw==}
@@ -974,6 +986,8 @@ snapshots:
 
   node-releases@2.0.19: {}
 
+  normalize.css@8.0.1: {}
+
   parse5@7.2.1:
     dependencies:
       entities: 4.5.0
@@ -1045,6 +1059,8 @@ snapshots:
       picocolors: 1.1.1
 
   validate-html-nesting@1.2.2: {}
+
+  vexflow@4.2.5: {}
 
   vite-plugin-solid@2.11.0(solid-js@1.9.3)(vite@6.0.3):
     dependencies:
