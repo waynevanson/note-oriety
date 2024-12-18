@@ -12,26 +12,25 @@ function createAnswer() {
 
 export function App() {
   const [answer, answerSet] = createSignal<number>(createAnswer())
-  const [guess, guessSet] = createSignal<number | undefined>()
-
-  createEffect(() => {
-    if (answer() === guess()) {
-      answerSet(createAnswer())
-    }
-  })
 
   const note = createMemo(() => NOTES_LABELS[answer()]!)
+
+  function handleGuess(index: number) {
+    if (index !== answer()) return
+
+    while (true) {
+      const next = createAnswer()
+      if (next === answer()) continue
+      answerSet(next)
+      break
+    }
+  }
 
   return (
     <main class={styles.main}>
       <VexFrame note={note} />
 
-      <ButtonGrid
-        answer={answer}
-        onClick={(index) => {
-          guessSet(index)
-        }}
-      />
+      <ButtonGrid answer={answer} onClick={handleGuess} />
     </main>
   )
 }
