@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@solid-primitives/resize-observer':
+        specifier: ^2.0.26
+        version: 2.0.26(solid-js@1.9.3)
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
@@ -15,8 +18,8 @@ importers:
         specifier: ^1.9.3
         version: 1.9.3
       vexflow:
-        specifier: ^4.2.5
-        version: 4.2.5
+        specifier: 5.0.0-beta.0
+        version: 5.0.0-beta.0
     devDependencies:
       typescript:
         specifier: ~5.6.3
@@ -368,6 +371,31 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@solid-primitives/event-listener@2.3.3':
+    resolution: {integrity: sha512-DAJbl+F0wrFW2xmcV8dKMBhk9QLVLuBSW+TR4JmIfTaObxd13PuL7nqaXnaYKDWOYa6otB00qcCUIGbuIhSUgQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/resize-observer@2.0.26':
+    resolution: {integrity: sha512-KbPhwal6ML9OHeUTZszBbt6PYSMj89d4wVCLxlvDYL4U0+p+xlCEaqz6v9dkCwm/0Lb+Wed7W5T1dQZCP3JUUw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/rootless@1.4.5':
+    resolution: {integrity: sha512-GFJE9GC3ojx0aUKqAUZmQPyU8fOVMtnVNrkdk2yS4kd17WqVSpXpoTmo9CnOwA+PG7FTzdIkogvfLQSLs4lrww==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/static-store@0.0.8':
+    resolution: {integrity: sha512-ZecE4BqY0oBk0YG00nzaAWO5Mjcny8Fc06CdbXadH9T9lzq/9GefqcSe/5AtdXqjvY/DtJ5C6CkcjPZO0o/eqg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/utils@6.2.3':
+    resolution: {integrity: sha512-CqAwKb2T5Vi72+rhebSsqNZ9o67buYRdEJrIFzRXz3U59QqezuuxPsyzTSVCacwS5Pf109VRsgCJQoxKRoECZQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -541,8 +569,8 @@ packages:
   validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
 
-  vexflow@4.2.5:
-    resolution: {integrity: sha512-+P+V2VWFyKcpW4Pwbs0p7nwICRQCzLWvkiPi4RpFlMXh/MRsiN1r7X6yvl1WauoJ4J6pVsnCzTAhC4m1ASlTng==}
+  vexflow@5.0.0-beta.0:
+    resolution: {integrity: sha512-uCzWR9HU1ciUfke1DA7U8DTXEiQxPzkHb/WDHLgRhKOMJoig4WRT1xgTryB4jvHLi0hjRBlTW0a+p6aAfv9X2A==}
 
   vite-plugin-solid@2.11.0:
     resolution: {integrity: sha512-G+NiwDj4EAeUE0wt3Ur9f+Lt9oMUuLd0FIxYuqwJSqRacKQRteCwUFzNy8zMEt88xWokngQhiFjfJMhjc1fDXw==}
@@ -867,6 +895,33 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.28.1':
     optional: true
 
+  '@solid-primitives/event-listener@2.3.3(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/resize-observer@2.0.26(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/event-listener': 2.3.3(solid-js@1.9.3)
+      '@solid-primitives/rootless': 1.4.5(solid-js@1.9.3)
+      '@solid-primitives/static-store': 0.0.8(solid-js@1.9.3)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/rootless@1.4.5(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/static-store@0.0.8(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/utils@6.2.3(solid-js@1.9.3)':
+    dependencies:
+      solid-js: 1.9.3
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.26.3
@@ -1060,7 +1115,7 @@ snapshots:
 
   validate-html-nesting@1.2.2: {}
 
-  vexflow@4.2.5: {}
+  vexflow@5.0.0-beta.0: {}
 
   vite-plugin-solid@2.11.0(solid-js@1.9.3)(vite@6.0.3):
     dependencies:
