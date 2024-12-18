@@ -1,6 +1,7 @@
 .main {
   display: grid;
   box-sizing: border-box;
+  max-width: 40rem;
 
   background-color: #eee;
   margin: 0 auto;
