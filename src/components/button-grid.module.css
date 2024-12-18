@@ -22,3 +22,11 @@
 .button:hover {
   background-color: color-mix(in oklab, darkcyan, white 20%);
 }
+
+.button[data-answer="false"]:active {
+  background-color: red;
+}
+
+.button[data-answer="true"]:active {
+  background-color: green;
+}

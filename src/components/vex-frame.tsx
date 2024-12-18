@@ -8,7 +8,6 @@ import {
   Voice,
 } from "vexflow"
 import styles from "./vex-frame.module.css"
-import { createElementSize } from "@solid-primitives/resize-observer"
 
 interface VexFlowProps {
   note: Accessor<string>
@@ -24,8 +23,6 @@ interface VexFlowProps {
 // todo: use easy version of this API
 export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
-
-  const size = createElementSize(() => ref)
 
   createEffect((rerender: boolean) => {
     if (!ref) return false

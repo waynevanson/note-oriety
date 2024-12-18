@@ -27,6 +27,7 @@ export function App() {
       <VexFrame note={note} />
 
       <ButtonGrid
+        answer={answer}
         onClick={(index) => {
           guessSet(index)
         }}
@@ -35,7 +36,7 @@ export function App() {
   )
 }
 
-function createAccuracy(corrects: Array<boolean>): number {
+export function createAccuracy(corrects: Array<boolean>): number {
   const total = corrects.length
 
   if (total <= 0) return 0
