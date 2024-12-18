@@ -1,3 +1,11 @@
 .note {
   transition: opacity 500ms linear;
 }
+
+.svg {
+}
+
+.ref {
+  display: flex;
+  justify-content: center;
+}

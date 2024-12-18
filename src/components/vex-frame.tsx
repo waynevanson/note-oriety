@@ -68,6 +68,9 @@ export function VexFrame(props: VexFlowProps) {
     svg.removeAttribute("width")
     svg.removeAttribute("height")
 
+    svg.classList.add(styles.svg)
+    ref.classList.add(styles.ref)
+
     return true
   }, false)
 

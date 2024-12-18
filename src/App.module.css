@@ -3,10 +3,12 @@
   box-sizing: border-box;
   max-width: 40rem;
 
+  gap: 1rem;
+
   background-color: #eee;
   margin: 0 auto;
   padding: 1rem;
 
-  grid-template-rows: minmax(20rem, auto) minmax(1fr, 40rem);
+  grid-template-rows: minmax(auto, 50svh) 1fr;
   min-height: 100svh;
 }
