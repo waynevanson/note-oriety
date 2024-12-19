@@ -5,6 +5,10 @@ export default defineConfig({
   plugins: [solid()],
   base: "/note-oriety/",
   build: {
-    rollupOptions: { output: { manualChunks: { vexflow: ["vexflow"] } } },
+    rollupOptions: {
+      output: {
+        manualChunks: { vexflow: ["vexflow"], "solid-js": ["solid-js"] },
+      },
+    },
   },
 })

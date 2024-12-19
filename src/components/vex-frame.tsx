@@ -10,7 +10,7 @@ import {
 } from "../constants"
 
 interface VexFlowProps {
-  note: Accessor<string>
+  note: Accessor<Note>
   signature: Accessor<(typeof KEY_SIGNATURES)[number]>
 }
 

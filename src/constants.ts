@@ -1,19 +1,24 @@
-import { KeySignature, NaturalNote } from "./types"
+import { KeySignature, NaturalNote, Note } from "./types"
 
-export const NOTES_LABELS = [
-  "A",
-  "A#",
-  "B",
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-]
+export const NOTES_KEYS = [
+  ["A"],
+  ["A#", "Bb"],
+  ["B"],
+  ["C"],
+  ["C#", "Db"],
+  ["D"],
+  ["D#", "Eb"],
+  ["E"],
+  ["F"],
+  ["F#", "Gb"],
+  ["G"],
+  ["G#", "Ab"],
+] as const
+
+// 0 - 11
+export type NOTE_INDEX = keyof typeof NOTES_KEYS
+
+export const NOTES: ReadonlyArray<Note> = NOTES_KEYS.flat()
 
 export const KEY_SIGNATURES_ACCIDENTALS_COUNT: Record<KeySignature, number> = {
   Ab: 4,

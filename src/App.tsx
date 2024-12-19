@@ -3,16 +3,17 @@ import "./App.css"
 import styles from "./App.module.css"
 import { ButtonGrid } from "./components/button-grid"
 import { VexFrame } from "./components/vex-frame"
-import { KEY_SIGNATURES, NOTES_LABELS } from "./constants"
+import { KEY_SIGNATURES, NOTE_INDEX, NOTES_KEYS } from "./constants"
 import "./reset.css"
 import { createStore } from "solid-js/store"
+import { Note } from "./types"
 
-function createAnswer() {
-  return Math.floor(Math.random() * NOTES_LABELS.length)
+function createAnswer(): NOTE_INDEX {
+  return Math.floor(Math.random() * NOTES_KEYS.length)
 }
 
 export function App() {
-  const [answer, answerSet] = createSignal<number>(createAnswer())
+  const [answer, answerSet] = createSignal<NOTE_INDEX>(createAnswer())
   const [signature, signatureSet] =
     createSignal<(typeof KEY_SIGNATURES)[number]>("C")
   const [streak, streakSet] = createSignal(0)
@@ -24,7 +25,7 @@ export function App() {
     total() <= 0 ? 0 : Math.trunc(100 * (outcome.correct / total()))
   )
 
-  const note = createMemo(() => NOTES_LABELS[answer()]!)
+  const note = createMemo(() => NOTES_KEYS[answer()][0 as never] as Note)
 
   function handleGuess(index: number) {
     // wrong guess

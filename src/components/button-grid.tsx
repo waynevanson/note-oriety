@@ -1,9 +1,9 @@
 import styles from "./button-grid.module.css"
-import { NOTES_LABELS } from "../constants"
+import { NOTE_INDEX, NOTES_KEYS } from "../constants"
 import { Accessor } from "solid-js"
 
 export interface ButtonGridProps {
-  answer: Accessor<number>
+  answer: Accessor<NOTE_INDEX>
   onClick?: (index: number) => void
 }
 
@@ -13,14 +13,14 @@ export function ButtonGrid(props: ButtonGridProps) {
 
   return (
     <ol class={styles.list}>
-      {NOTES_LABELS.map((label, index) => (
+      {NOTES_KEYS.map((label, index) => (
         <li class={styles.item}>
           <button
             class={styles.button}
             data-answer={props.answer() == index}
             onClick={() => onClick?.(index)}
           >
-            {label}
+            {label.join(" / ")}
           </button>
         </li>
       ))}
