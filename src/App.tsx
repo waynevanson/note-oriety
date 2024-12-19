@@ -14,11 +14,14 @@ export function App() {
   const [answer, answerSet] = createSignal<number>(createAnswer())
   const [signature, signatureSet] =
     createSignal<(typeof KEY_SIGNATURES)[number]>("C")
+  const [streak, streakSet] = createSignal(0)
 
   const note = createMemo(() => NOTES_LABELS[answer()]!)
 
   function handleGuess(index: number) {
     if (index !== answer()) return
+
+    streakSet((number) => number + 1)
 
     while (true) {
       const next = createAnswer()
@@ -33,6 +36,7 @@ export function App() {
       <VexFrame note={note} signature={signature} />
       <section>
         <label for="input.key">
+          <span>Key Signature </span>
           <select
             name="input.key"
             id="input.key"
@@ -46,6 +50,7 @@ export function App() {
               </option>
             ))}
           </select>
+          <span> Streak: {streak()}</span>
         </label>
       </section>
       <ButtonGrid answer={answer} onClick={handleGuess} />

@@ -123,13 +123,29 @@ export type NOTES =
   | "Gb"
   | "G"
 
+export type KeySignatures =
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "Cb"
+  | "F#"
+  | "Gb"
+  | "C#"
+  | "Db"
+  | "Ab"
+  | "Eb"
+  | "Bb"
+
 export const ACCIDENTALS_PER_KEY: Record<
-  NOTES,
+  KeySignatures,
   { accidentals: number; flatten: boolean }
 > = {
   Ab: { accidentals: 4, flatten: true },
   A: { accidentals: 3, flatten: false },
-  "A#": { accidentals: 2, flatten: true },
   Bb: { accidentals: 2, flatten: true },
   B: { accidentals: 5, flatten: false },
   Cb: { accidentals: 7, flatten: true },
@@ -137,7 +153,6 @@ export const ACCIDENTALS_PER_KEY: Record<
   "C#": { accidentals: 7, flatten: false },
   Db: { accidentals: 5, flatten: true },
   D: { accidentals: 2, flatten: false },
-  "D#": { accidentals: 3, flatten: true },
   Eb: { accidentals: 3, flatten: true },
   E: { accidentals: 4, flatten: false },
   F: { accidentals: 1, flatten: true },
@@ -147,8 +162,8 @@ export const ACCIDENTALS_PER_KEY: Record<
 }
 
 export const KEY_SIGNATURES = Object.keys(
-  NUMBER_OF_ACCIDENTALS_PER_KEY
-) as Array<keyof typeof NUMBER_OF_ACCIDENTALS_PER_KEY>
+  ACCIDENTALS_PER_KEY
+) as Array<KeySignatures>
 
 // I still have to create a bunch of look up tables..
 // keysignature -> actual note -> rendered note
@@ -156,7 +171,7 @@ export const KEY_SIGNATURES = Object.keys(
 // VexFlow will show a sharp in the note even if the key signature implies that note.
 // We have to undo that.
 function transposeAccidentalToVexFlow(
-  keySignature: NOTES,
+  keySignature: KeySignatures,
   note: NOTES
 ): string {
   const config = ACCIDENTALS_PER_KEY[keySignature]
@@ -176,8 +191,6 @@ function transposeAccidentalToVexFlow(
   if (!accidentals.includes(normal)) {
     return note
   }
-
-  console.log({ normal, note, symbol })
 
   if (normal === note) {
     return note + "n"
