@@ -1,5 +1,5 @@
 import { Accessor, createEffect, createMemo } from "solid-js"
-import { Accidental, Factory, RendererBackends } from "vexflow"
+import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
 
 interface VexFlowProps {
@@ -21,7 +21,7 @@ export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
 
   const note = createMemo(() =>
-    transposeAccidentalToVexFlow(props.signature(), props.note())
+    transposeAccidentalToVexFlow(props.signature(), props.note() as never)
   )
 
   createEffect((rerender: boolean) => {

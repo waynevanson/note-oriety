@@ -1,12 +1,8 @@
-import { createEffect, createMemo, createSignal } from "solid-js"
+import { createMemo, createSignal } from "solid-js"
 import "./App.css"
 import styles from "./App.module.css"
 import { ButtonGrid } from "./components/button-grid"
-import {
-  KEY_SIGNATURES,
-  NUMBER_OF_ACCIDENTALS_PER_KEY,
-  VexFrame,
-} from "./components/vex-frame"
+import { KEY_SIGNATURES, VexFrame } from "./components/vex-frame"
 import { NOTES_LABELS } from "./constants"
 import "./reset.css"
 
