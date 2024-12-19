@@ -96,3 +96,6 @@ export const KEY_SIGNATURES_ACCIDENTALS: Record<
     return [keySignature, accidentals] as const
   })
 ) as never
+
+// KEY_SIGNATURE_NATURALS
+// KEY_SIGNATURE_NOTES

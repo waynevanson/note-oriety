@@ -8,15 +8,21 @@ import "./reset.css"
 import { createStore } from "solid-js/store"
 import { Note } from "./types"
 
-function createAnswer(): NOTE_INDEX {
-  return Math.floor(Math.random() * NOTES_KEYS.length)
-}
-
+// todo: option to show chromatics
 export function App() {
-  const [answer, answerSet] = createSignal<NOTE_INDEX>(createAnswer())
   const [signature, signatureSet] =
     createSignal<(typeof KEY_SIGNATURES)[number]>("C")
-  const [streak, streakSet] = createSignal(0)
+
+  const [showChromatics, showChromaticsSet] = createSignal(false)
+
+  // todo: create const map of all notes in key signature
+  function createAnswer(): NOTE_INDEX {
+    return Math.floor(Math.random() * NOTES_KEYS.length)
+  }
+
+  const [answer, answerSet] = createSignal<NOTE_INDEX>(createAnswer())
+
+  const note = createMemo(() => NOTES_KEYS[answer()][0 as never] as Note)
 
   const [outcome, outcomeSet] = createStore({ incorrect: 0, correct: 0 })
   const total = createMemo(() => outcome.correct + outcome.incorrect)
@@ -25,7 +31,7 @@ export function App() {
     total() <= 0 ? 0 : Math.trunc(100 * (outcome.correct / total()))
   )
 
-  const note = createMemo(() => NOTES_KEYS[answer()][0 as never] as Note)
+  const [streak, streakSet] = createSignal(0)
 
   function handleGuess(index: number) {
     // wrong guess
@@ -68,6 +74,18 @@ export function App() {
             ))}
           </select>
         </label>
+        {false && (
+          <label for="input.chromatics">
+            <span> Chromatics: </span>
+            <input
+              type="checkbox"
+              checked={showChromatics()}
+              onChange={(event) =>
+                showChromaticsSet(event.currentTarget.checked)
+              }
+            />
+          </label>
+        )}
         <span> Streak: {streak()} </span>
         <span>
           Accuracy: {accuracy()}% ({outcome.correct} of {total()})
