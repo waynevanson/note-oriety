@@ -1,4 +1,4 @@
-import { Accessor, createEffect } from "solid-js"
+import { Accessor, createEffect, createMemo } from "solid-js"
 import { Accidental, Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
 
@@ -19,6 +19,10 @@ const ID = "note-oriety-vex-flow"
 // todo: use easy version of this API
 export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
+
+  const note = createMemo(() =>
+    transposeAccidentalToVexFlow(props.signature(), props.note())
+  )
 
   createEffect((rerender: boolean) => {
     if (!ref) return false
@@ -43,11 +47,7 @@ export function VexFrame(props: VexFlowProps) {
     })
 
     const score = factory.EasyScore()
-    const vexableNote = transposeAccidentalToVexFlow(
-      props.signature(),
-      props.note() as any
-    )
-    const notes = score.notes(`${vexableNote}4/w`)
+    const notes = score.notes(`${note()}4/w`)
 
     factory
       .System()
