@@ -170,8 +170,6 @@ function transposeAccidentalToVexFlow(
 
   const accidentals = ss[symbol].slice(0, config.accidentals)
 
-  console.log({ accidentals })
-
   const normal = note.slice(0, 1)
 
   // note is always displayed as is
@@ -181,28 +179,15 @@ function transposeAccidentalToVexFlow(
 
   console.log({ normal, note, symbol })
 
-  // implied F == F#
-  if (config.flatten) {
-    if (normal === note) {
-      return note + "n"
-    } else {
-      return NEXT[normal as unknown as never]
-    }
-  } else {
-    if (normal === note) {
-      return note + "n"
-    } else {
-      return normal
-    }
+  if (normal === note) {
+    return note + "n"
   }
 
-  // in key of G, where F# implied,
-  // flatten F# to F.
-  // flatten F to Fn
+  if (!config.flatten) {
+    return normal
+  }
 
-  // in key of F, where Bb is implied,
-  // sharpen Bb to B,
-  // sharpen B to Bn
+  return NEXT[normal as unknown as never]
 }
 
 // transpot G -> A, A -> B
