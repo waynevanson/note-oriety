@@ -86,6 +86,8 @@ export function VexFrame(props: VexFlowProps) {
 
 // VexFlow will show a sharp in the note even if the key signature implies that note.
 // We have to undo that.
+
+// todo: this could be replaced with the 0-11 number indexer, adding accidentals based on key
 function transposeAccidentalToVexFlow(
   keySignature: KeySignature,
   note: Note
