@@ -1,17 +1,12 @@
 import { Accessor, createEffect } from "solid-js"
-import {
-  Accidental,
-  Formatter,
-  Renderer,
-  Stave,
-  StaveNote,
-  Voice,
-} from "vexflow"
+import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
 
 interface VexFlowProps {
   note: Accessor<string>
 }
+
+const ID = "note-oriety-vex-flow"
 
 /**
  * @summary
@@ -32,47 +27,68 @@ export function VexFrame(props: VexFlowProps) {
     }
 
     // width and height should be aspect ratio
-    const width = 100
-    const height = 100
+    const width = 100 + NUMBER_OF_ACCIDENTALS_PER_KEY["C"] * 40
 
-    const renderer = new Renderer(ref, Renderer.Backends.SVG)
+    // todo: make relative to height and width of keys range
+    const height = 140
 
-    const context = renderer.getContext()
+    const factory = new Factory({
+      renderer: {
+        elementId: ID,
+        width,
+        height,
+        backend: RendererBackends.SVG,
+      },
+    })
 
-    context.resize(width, height)
+    const score = factory.EasyScore()
+    const notes = score.notes(`${props.note()}4/w`)
 
-    const stave = new Stave(0, 0, width).addClef("treble")
+    factory
+      .System()
+      .addStave({ voices: [score.voice(notes)] })
+      .addClef("treble")
 
-    stave.setContext(context).draw()
-
-    const key = props.note().slice(0, 1)
-    const accidental = props.note().slice(1, 2)
-
-    const note = new StaveNote({
-      duration: "w",
-      keys: [key + "/4"],
-      clef: "treble",
-    }).addClass(styles.note)
-
-    if (accidental) {
-      note.addModifier(new Accidental(accidental))
-    }
-
-    const voice = new Voice({ beatValue: 1, numBeats: 1 }).addTickable(note)
-
-    new Formatter().joinVoices([voice]).formatToStave([voice], stave)
-
-    voice.draw(context, stave)
+    factory.draw()
 
     const svg = ref.firstChild! as SVGElement
+
+    // ensure we can size svg dynamically
     svg.removeAttribute("width")
     svg.removeAttribute("height")
 
+    // add custom classes
     svg.classList.add(styles.svg)
     ref.classList.add(styles.ref)
 
     return true
   }, false)
 
-  return <div ref={ref} />
+  return <div id={ID} ref={ref} />
+}
+
+// sound
+// score
+// key signatures
+// clefs
+// create combinations, even multiple combinations.
+
+// look up tables for converting putting the sharp in it.
+
+const NUMBER_OF_ACCIDENTALS_PER_KEY = {
+  C: 0,
+  G: 1,
+  D: 2,
+  A: 3,
+  E: 4,
+  B: 5,
+  Cb: 7,
+  "F#": 6,
+  Gb: 6,
+  Db: 5,
+  "C#": 7,
+  Ab: 4,
+  Eb: 3,
+  Bb: 2,
+  F: 1,
 }
