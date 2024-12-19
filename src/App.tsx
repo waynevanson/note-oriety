@@ -21,6 +21,7 @@ export function App() {
   function handleGuess(index: number) {
     if (index !== answer()) {
       streakSet(0)
+      return
     }
 
     streakSet((number) => number + 1)
