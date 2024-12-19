@@ -1,6 +1,13 @@
 import { Accessor, createEffect, createMemo } from "solid-js"
 import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
+import { KeySignature, NaturalNote, Note } from "../types"
+import {
+  KEY_SIGNATURES,
+  KEY_SIGNATURES_ACCIDENTALS_COUNT,
+  KEY_SIGNATURES_ACCIDENTALS,
+  KEY_SIGNATURES_FLAT,
+} from "../constants"
 
 interface VexFlowProps {
   note: Accessor<string>
@@ -16,7 +23,6 @@ const ID = "note-oriety-vex-flow"
  * @param props
  * @returns
  */
-// todo: use easy version of this API
 export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
 
@@ -31,7 +37,7 @@ export function VexFrame(props: VexFlowProps) {
       ref.innerHTML = ""
     }
 
-    const accidentalsCount = NUMBER_OF_ACCIDENTALS_PER_KEY[props.signature()]
+    const accidentalsCount = KEY_SIGNATURES_ACCIDENTALS_COUNT[props.signature()]
     const width = 100 + accidentalsCount * 10
 
     // todo: make relative to height relative to the clefs we display.
@@ -75,128 +81,36 @@ export function VexFrame(props: VexFlowProps) {
 
 // sound
 // score
-// key signatures
 // clefs
 // create combinations, even multiple combinations.
-
-const ss = {
-  "#": ["F", "C", "G", "D", "A", "E", "B"],
-  b: ["B", "E", "A", "D", "G", "C", "F"],
-}
-
-export const NUMBER_OF_ACCIDENTALS_PER_KEY = {
-  Ab: 4,
-  A: 3,
-  "A#": 2,
-  Bb: 2,
-  B: 5,
-  Cb: 7,
-  C: 0,
-  "C#": 7,
-  Db: 5,
-  D: 2,
-  "D#": 3,
-  Eb: 3,
-  E: 4,
-  F: 1,
-  "F#": 6,
-  Gb: 6,
-  G: 1,
-}
-
-export type NOTES =
-  | "Ab"
-  | "A"
-  | "A#"
-  | "Bb"
-  | "B"
-  | "Cb"
-  | "C"
-  | "C#"
-  | "Db"
-  | "D"
-  | "D#"
-  | "Eb"
-  | "E"
-  | "F"
-  | "F#"
-  | "Gb"
-  | "G"
-
-export type KeySignatures =
-  | "A"
-  | "B"
-  | "C"
-  | "D"
-  | "E"
-  | "F"
-  | "G"
-  | "Cb"
-  | "F#"
-  | "Gb"
-  | "C#"
-  | "Db"
-  | "Ab"
-  | "Eb"
-  | "Bb"
-
-export const ACCIDENTALS_PER_KEY: Record<
-  KeySignatures,
-  { accidentals: number; flatten: boolean }
-> = {
-  Ab: { accidentals: 4, flatten: true },
-  A: { accidentals: 3, flatten: false },
-  Bb: { accidentals: 2, flatten: true },
-  B: { accidentals: 5, flatten: false },
-  Cb: { accidentals: 7, flatten: true },
-  C: { accidentals: 0, flatten: false },
-  "C#": { accidentals: 7, flatten: false },
-  Db: { accidentals: 5, flatten: true },
-  D: { accidentals: 2, flatten: false },
-  Eb: { accidentals: 3, flatten: true },
-  E: { accidentals: 4, flatten: false },
-  F: { accidentals: 1, flatten: true },
-  "F#": { accidentals: 6, flatten: false },
-  Gb: { accidentals: 6, flatten: true },
-  G: { accidentals: 1, flatten: false },
-}
-
-export const KEY_SIGNATURES = Object.keys(
-  ACCIDENTALS_PER_KEY
-) as Array<KeySignatures>
-
-// I still have to create a bunch of look up tables..
-// keysignature -> actual note -> rendered note
 
 // VexFlow will show a sharp in the note even if the key signature implies that note.
 // We have to undo that.
 function transposeAccidentalToVexFlow(
-  keySignature: KeySignatures,
-  note: NOTES
+  keySignature: KeySignature,
+  note: Note
 ): string {
-  const config = ACCIDENTALS_PER_KEY[keySignature]
+  const accidentals = KEY_SIGNATURES_ACCIDENTALS[keySignature]
+  const flat = KEY_SIGNATURES_FLAT[keySignature]
 
-  // no accidentals
-  if (config.accidentals <= 0) {
+  // no accidentals: 'C'
+  if (flat === null || accidentals.length <= 0) {
     return note
   }
 
-  const symbol = config.flatten ? "b" : "#"
-
-  const accidentals = ss[symbol].slice(0, config.accidentals)
-
-  const normal = note.slice(0, 1)
+  const normal = note.slice(0, 1) as NaturalNote
 
   // note is always displayed as is
   if (!accidentals.includes(normal)) {
     return note
   }
 
+  // display as natural when in key that implies it is sharp of flat
   if (normal === note) {
     return note + "n"
   }
 
-  if (!config.flatten) {
+  if (!flat) {
     return normal
   }
 
