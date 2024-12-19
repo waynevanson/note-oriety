@@ -19,7 +19,9 @@ export function App() {
   const note = createMemo(() => NOTES_LABELS[answer()]!)
 
   function handleGuess(index: number) {
-    if (index !== answer()) return
+    if (index !== answer()) {
+      streakSet(0)
+    }
 
     streakSet((number) => number + 1)
 
