@@ -1,16 +1,19 @@
 import { Accessor, createEffect, createMemo } from "solid-js"
 import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
-import { KeySignature, NaturalNote, Note } from "../types"
 import {
   KEY_SIGNATURES,
-  KEY_SIGNATURES_ACCIDENTALS_COUNT,
   KEY_SIGNATURES_ACCIDENTALS,
+  KEY_SIGNATURES_ACCIDENTALS_COUNT,
   KEY_SIGNATURES_FLAT,
-} from "../constants"
+  KeySignature,
+  Note,
+  NaturalKey,
+  Key,
+} from "../lib"
 
 interface VexFlowProps {
-  note: Accessor<Note>
+  note: Accessor<Key>
   signature: Accessor<(typeof KEY_SIGNATURES)[number]>
 }
 
@@ -90,7 +93,7 @@ export function VexFrame(props: VexFlowProps) {
 // todo: this could be replaced with the 0-11 number indexer, adding accidentals based on key
 function transposeAccidentalToVexFlow(
   keySignature: KeySignature,
-  note: Note
+  note: Key
 ): string {
   const accidentals = KEY_SIGNATURES_ACCIDENTALS[keySignature]
   const flat = KEY_SIGNATURES_FLAT[keySignature]
@@ -100,7 +103,7 @@ function transposeAccidentalToVexFlow(
     return note
   }
 
-  const normal = note.slice(0, 1) as NaturalNote
+  const normal = note.slice(0, 1) as NaturalKey
 
   // note is always displayed as is
   if (!accidentals.includes(normal)) {

@@ -1,24 +1,6 @@
-import { KeySignature, NaturalNote, Note } from "./types"
+import { NaturalKey, Key } from "./notes"
 
-export const NOTES_KEYS = [
-  ["A"],
-  ["A#", "Bb"],
-  ["B"],
-  ["C"],
-  ["C#", "Db"],
-  ["D"],
-  ["D#", "Eb"],
-  ["E"],
-  ["F"],
-  ["F#", "Gb"],
-  ["G"],
-  ["G#", "Ab"],
-] as const
-
-// 0 - 11
-export type NOTE_INDEX = keyof typeof NOTES_KEYS
-
-export const NOTES: ReadonlyArray<Note> = NOTES_KEYS.flat()
+export type KeySignature = Exclude<Key, "A#" | "D#" | "G#"> | "Cb"
 
 export const KEY_SIGNATURES_ACCIDENTALS_COUNT: Record<KeySignature, number> = {
   Ab: 4,
@@ -56,7 +38,7 @@ export const KEY_SIGNATURES_FLAT: Record<KeySignature, boolean | null> = {
   G: false,
 }
 
-const FIFTHS_FROM_F: Array<NaturalNote> = ["F", "C", "G", "D", "A", "E", "B"]
+const FIFTHS_FROM_F: Array<NaturalKey> = ["F", "C", "G", "D", "A", "E", "B"]
 
 export const KEY_SIGNATURES: Array<KeySignature> = [
   "A",
@@ -75,17 +57,17 @@ export const KEY_SIGNATURES: Array<KeySignature> = [
   "Gb",
 ]
 
-function flats(accidentals: number): Array<NaturalNote> {
+function flats(accidentals: number): Array<NaturalKey> {
   return FIFTHS_FROM_F.slice(-accidentals)
 }
 
-function sharps(accidentals: number): Array<NaturalNote> {
+function sharps(accidentals: number): Array<NaturalKey> {
   return FIFTHS_FROM_F.slice(accidentals)
 }
 
 export const KEY_SIGNATURES_ACCIDENTALS: Record<
   KeySignature,
-  Array<NaturalNote>
+  Array<NaturalKey>
 > = Object.fromEntries(
   KEY_SIGNATURES.map((keySignature) => {
     const flat = KEY_SIGNATURES_FLAT[keySignature]

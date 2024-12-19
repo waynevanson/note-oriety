@@ -1,9 +1,9 @@
+import { Note, NOTES_KEYS } from "../lib"
 import styles from "./button-grid.module.css"
-import { NOTE_INDEX, NOTES_KEYS } from "../constants"
 import { Accessor } from "solid-js"
 
 export interface ButtonGridProps {
-  answer: Accessor<NOTE_INDEX>
+  answer: Accessor<Note>
   onClick?: (index: number) => void
 }
 
