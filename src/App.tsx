@@ -2,7 +2,11 @@ import { createEffect, createMemo, createSignal } from "solid-js"
 import "./App.css"
 import styles from "./App.module.css"
 import { ButtonGrid } from "./components/button-grid"
-import { VexFrame } from "./components/vex-frame"
+import {
+  KEY_SIGNATURES,
+  NUMBER_OF_ACCIDENTALS_PER_KEY,
+  VexFrame,
+} from "./components/vex-frame"
 import { NOTES_LABELS } from "./constants"
 import "./reset.css"
 
@@ -12,6 +16,8 @@ function createAnswer() {
 
 export function App() {
   const [answer, answerSet] = createSignal<number>(createAnswer())
+  const [signature, signatureSet] =
+    createSignal<(typeof KEY_SIGNATURES)[number]>("C")
 
   const note = createMemo(() => NOTES_LABELS[answer()]!)
 
@@ -28,8 +34,24 @@ export function App() {
 
   return (
     <main class={styles.main}>
-      <VexFrame note={note} />
-
+      <VexFrame note={note} signature={signature} />
+      <section>
+        <label for="input.key">
+          <select
+            name="input.key"
+            id="input.key"
+            onChange={(e) => {
+              signatureSet(e.currentTarget.value as never)
+            }}
+          >
+            {KEY_SIGNATURES.map((sig) => (
+              <option value={sig} selected={signature() == sig}>
+                {sig}
+              </option>
+            ))}
+          </select>
+        </label>
+      </section>
       <ButtonGrid answer={answer} onClick={handleGuess} />
     </main>
   )

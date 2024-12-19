@@ -9,6 +9,6 @@
   margin: 0 auto;
   padding: 1rem;
 
-  grid-template-rows: minmax(auto, 50svh) 1fr;
+  grid-template-rows: minmax(auto, 50svh) auto 1fr;
   min-height: 100svh;
 }
