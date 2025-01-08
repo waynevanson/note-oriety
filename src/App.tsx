@@ -5,7 +5,11 @@ import { ButtonGrid } from "./components/button-grid"
 import { VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
-import { KEY_SIGNATURES, Key, NOTES_KEYS, Note } from "./lib"
+import {
+  KEY_SIGNATURES,
+  PITCH_CLASS_KINDS_PITCH_CLASS,
+  PitchClassKind,
+} from "./lib"
 
 // todo: option to show chromatics
 export function App() {
@@ -14,14 +18,13 @@ export function App() {
 
   const [showChromatics, showChromaticsSet] = createSignal(false)
 
-  // todo: create const map of all notes in key signature
-  function createAnswer(): Note {
-    return Math.floor(Math.random() * NOTES_KEYS.length)
+  function createAnswer(): PitchClassKind {
+    return Math.floor(
+      Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
+    ) as PitchClassKind
   }
 
-  const [answer, answerSet] = createSignal<Note>(createAnswer())
-
-  const note = createMemo(() => NOTES_KEYS[answer()][0 as never] as Key)
+  const [answer, answerSet] = createSignal<PitchClassKind>(createAnswer())
 
   const [outcome, outcomeSet] = createStore({ incorrect: 0, correct: 0 })
   const total = createMemo(() => outcome.correct + outcome.incorrect)
@@ -55,7 +58,7 @@ export function App() {
 
   return (
     <main class={styles.main}>
-      <VexFrame note={note} signature={signature} />
+      <VexFrame pitchClassKind={answer} signature={signature} />
       <section>
         <label for="input.key">
           <span>Key Signature </span>

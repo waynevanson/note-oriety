@@ -9,10 +9,12 @@ import {
   KeySignature,
   NaturalKey,
   Key,
+  PitchClassKind,
+  PITCH_CLASS_KINDS_PITCH_CLASS,
 } from "../lib"
 
 interface VexFlowProps {
-  note: Accessor<Key>
+  pitchClassKind: Accessor<PitchClassKind>
   signature: Accessor<(typeof KEY_SIGNATURES)[number]>
 }
 
@@ -28,8 +30,13 @@ const ID = "note-oriety-vex-flow"
 export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
 
+  const pitchClass = createMemo(
+    () =>
+      PITCH_CLASS_KINDS_PITCH_CLASS[props.pitchClassKind()][0 as never] as Key
+  )
+
   const note = createMemo(() =>
-    transposeAccidentalToVexFlow(props.signature(), props.note() as never)
+    transposeAccidentalToVexFlow(props.signature(), pitchClass())
   )
 
   createEffect((rerender: boolean) => {

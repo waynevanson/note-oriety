@@ -1,9 +1,9 @@
-import { Note, NOTES_KEYS } from "../lib"
+import { PitchClassKind, PITCH_CLASS_KINDS_PITCH_CLASS } from "../lib"
 import styles from "./button-grid.module.css"
 import { Accessor } from "solid-js"
 
 export interface ButtonGridProps {
-  answer: Accessor<Note>
+  answer: Accessor<PitchClassKind>
   onClick?: (index: number) => void
 }
 
@@ -13,7 +13,7 @@ export function ButtonGrid(props: ButtonGridProps) {
 
   return (
     <ol class={styles.list}>
-      {NOTES_KEYS.map((label, index) => (
+      {PITCH_CLASS_KINDS_PITCH_CLASS.map((label, index) => (
         <li class={styles.item}>
           <button
             class={styles.button}

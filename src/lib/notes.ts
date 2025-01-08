@@ -1,4 +1,4 @@
-import { NOTES_KEYS } from "./key"
+import { PITCH_CLASS_KINDS_PITCH_CLASS } from "./pitch-class"
 
 export type AccidentalFlatKey = "Ab" | "Bb" | "Db" | "Eb" | "Gb"
 
@@ -10,4 +10,4 @@ export type NaturalKey = "A" | "B" | "C" | "D" | "E" | "F" | "G"
 
 export type Key = NaturalKey | AccidentalNote
 
-export const NOTES: ReadonlyArray<Key> = NOTES_KEYS.flat()
+export const NOTES: ReadonlyArray<Key> = PITCH_CLASS_KINDS_PITCH_CLASS.flat()
