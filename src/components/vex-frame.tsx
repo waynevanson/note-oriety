@@ -7,7 +7,6 @@ import {
   KEY_SIGNATURES_ACCIDENTALS_COUNT,
   KEY_SIGNATURES_FLAT,
   KeySignature,
-  Note,
   NaturalKey,
   Key,
 } from "../lib"
