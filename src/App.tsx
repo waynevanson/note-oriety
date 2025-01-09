@@ -51,9 +51,9 @@ export function App() {
     streak: 0,
   })
 
-  function handleGuess(index: number) {
+  function handleGuess(pitchClassKind: number) {
     // wrong guess
-    if (index !== store.note.pitchClassKind) {
+    if (pitchClassKind !== store.note.pitchClassKind) {
       storeSet("streak", 0)
       storeSet("outcome", "incorrect", (a) => a + 1)
       return
