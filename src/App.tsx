@@ -25,7 +25,7 @@ export interface AppStore {
   streak: number
 }
 
-function createAnswer(): PitchClassKind {
+function createPitchClassKind(): PitchClassKind {
   return Math.floor(
     Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
   ) as PitchClassKind
@@ -35,14 +35,13 @@ function createOctave(): 4 | 5 {
   return (Math.round(Math.random()) + 4) as never
 }
 
-// todo: generate more than 1 octave in ranges.
 // todo: create control panel
 // todo: add bass and that middle clef
 // todo: option to show chromatics
 export function App() {
   const [store, storeSet] = createStore<AppStore>({
     note: {
-      pitchClassKind: createAnswer(),
+      pitchClassKind: createPitchClassKind(),
       octave: createOctave(),
       signature: "C",
     },
@@ -73,7 +72,7 @@ export function App() {
 
     // ensure answer isn't the same as before
     while (true) {
-      const next = createAnswer()
+      const next = createPitchClassKind()
       if (next === store.note.pitchClassKind) continue
       storeSet("note", "pitchClassKind", next)
       break
