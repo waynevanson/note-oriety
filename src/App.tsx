@@ -36,7 +36,6 @@ function createOctave(): 4 | 5 {
   return (Math.round(Math.random()) + 4) as never
 }
 
-// todo: create control panel
 // todo: add bass and that middle clef
 // todo: option to show chromatics
 export function App() {
