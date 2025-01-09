@@ -11,6 +11,7 @@ import {
   PITCH_CLASS_KINDS_PITCH_CLASS,
   PitchClassKind,
 } from "./lib"
+import { ControlPanel } from "./components/control-panel"
 
 export interface Note {
   signature: KeySignatureDistinctKeyed
@@ -50,14 +51,6 @@ export function App() {
     streak: 0,
   })
 
-  const total = createMemo(
-    () => store.outcome.correct + store.outcome.incorrect
-  )
-
-  const accuracy = createMemo(() =>
-    total() <= 0 ? 0 : Math.trunc(100 * (store.outcome.correct / total()))
-  )
-
   function handleGuess(index: number) {
     // wrong guess
     if (index !== store.note.pitchClassKind) {
@@ -88,40 +81,18 @@ export function App() {
         signature={() => store.note.signature}
         octave={() => store.note.octave}
       />
-      <section>
-        <label for="input.key">
-          <span>Key Signature </span>
-          <select
-            name="input.key"
-            id="input.key"
-            onChange={(e) => {
-              storeSet("note", "signature", e.currentTarget.value as never)
-            }}
-          >
-            {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
-              <option value={sig} selected={store.note.signature == sig}>
-                {sig}
-              </option>
-            ))}
-          </select>
-        </label>
-        {false && (
-          <label for="input.chromatics">
-            <span> Chromatics: </span>
-            <input
-              type="checkbox"
-              checked={store.showChromatics}
-              onChange={(event) =>
-                storeSet("showChromatics", event.currentTarget.checked)
-              }
-            />
-          </label>
-        )}
-        <span> Streak: {store.streak} </span>
-        <span>
-          Accuracy: {accuracy()}% ({store.outcome.correct} of {total()})
-        </span>
-      </section>
+      <ControlPanel
+        chromatics={store.showChromatics}
+        keySignature={store.note.signature}
+        outcome={store.outcome}
+        streak={store.streak}
+        onChangeChromatics={(chromatics) =>
+          storeSet("showChromatics", chromatics)
+        }
+        onChangeKeySignature={(keySignature) =>
+          storeSet("note", "signature", keySignature)
+        }
+      />
       <ButtonGrid
         answer={() => store.note.pitchClassKind}
         onClick={handleGuess}
