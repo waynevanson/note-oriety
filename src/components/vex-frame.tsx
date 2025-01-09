@@ -2,10 +2,7 @@ import { Accessor, createEffect, createMemo } from "solid-js"
 import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
 import {
-  NormalKey,
-  Key,
   PitchClassKind,
-  PITCH_CLASS_KINDS_PITCH_CLASS,
   KeySignatureDistinctKeyed,
   countAccidentals,
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,

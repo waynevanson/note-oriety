@@ -13,6 +13,8 @@ import {
 } from "./lib"
 
 // todo: option to show chromatics
+// todo: add bass and that middle clef
+// todo: generate more than 1 octave in ranges.
 export function App() {
   const [signature, signatureSet] = createSignal<KeySignatureDistinctKeyed>("C")
 
