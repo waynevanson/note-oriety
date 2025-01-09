@@ -1,4 +1,4 @@
-import { NaturalKey, Key } from "./notes"
+import { NaturalKey, Key } from "./key"
 
 export type KeySignature = Exclude<Key, "A#" | "D#" | "G#"> | "Cb"
 
@@ -78,43 +78,3 @@ export const KEY_SIGNATURES_ACCIDENTALS: Record<
     return [keySignature, accidentals] as const
   })
 ) as never
-
-// KEY_SIGNATURE_NATURALS
-// KEY_SIGNATURE_NOTES
-
-// export const KEY_SIGNATURES_NOTES: Record<
-//   KeySignature,
-//   ReadonlyArray<string>
-// > = {
-//   A: ["A", "B", "C#", "D", "E", "F#", "G#"],
-//   Bb: ["Bb", "C", "D", "Eb", "F", "G", "A"],
-//   B: ["B", "C#", "D#", "E", "F#", "G#", "A#"],
-//   C: ["C", "D", "E", "F", "G", "A", "B"],
-//   "C#": ["C#", "D#", "E#", "F#", "G#", "A#", "B#"],
-//   Db: ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
-//   D: ["D", "E", "F#", "G", "A", "B", "C#"],
-//   Eb: ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
-//   E: ["E", "F#", "G#", "A", "B", "C#", "D#"],
-//   F: ["F", "G", "A", "Bb", "C", "D", "E"],
-//   "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
-//   Gb: ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"],
-//   G: ["G", "A", "B", "C", "D", "E", "F#"],
-//   Ab: ["Ab", "Bb", "C", "Db", "Eb", "F", "G"],
-// }
-
-// // only for notes
-// export const TRANSFORM = {
-//   C: {
-//     C: "C",
-//     "C#": "C#",
-//     Db: "Db",
-//     D: "D",
-//     "D#": "D#",
-//     Eb: "Eb",
-//     E: "E",
-//     F: "F",
-//     G: "G",
-//     A: "A",
-//     B: "B",
-//   },
-// }
