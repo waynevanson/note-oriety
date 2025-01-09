@@ -1,80 +1,49 @@
-import { NaturalKey, Key } from "./key"
+import { NormalKey, FlatKey, SharpKey, Key } from "./key"
+import { PitchClassMap } from "./pitch-class"
 
-export type KeySignature = Exclude<Key, "A#" | "D#" | "G#"> | "Cb"
+export type KeySignatureAll = NormalKey | FlatKey | SharpKey
 
-export const KEY_SIGNATURES_ACCIDENTALS_COUNT: Record<KeySignature, number> = {
-  Ab: 4,
-  A: 3,
-  Bb: 2,
-  B: 5,
-  Cb: 7,
-  C: 0,
-  "C#": 7,
-  Db: 5,
-  D: 2,
-  Eb: 3,
-  E: 4,
-  F: 1,
-  "F#": 6,
-  Gb: 6,
-  G: 1,
+export type KeySignatureDistinctKeyed =
+  | NormalKey
+  | "Bb"
+  | "Eb"
+  | "Ab"
+  | "Db"
+  | "Gb"
+  | "Cb"
+  | "F#"
+  | "C#"
+
+// on the <KEY_SIGNATURE> scale,
+// to represent the actual note <NOTE>,
+// I would have to write it as <KEY>
+export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
+  KeySignatureDistinctKeyed,
+  PitchClassMap<Key>
+> = {
+  // sharps
+  C: ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"],
+  G: ["A", "A#", "B", "C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#"],
+  D: ["A", "A#", "B", "Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#"],
+  A: ["A", "A#", "B", "Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G"],
+  E: ["A", "A#", "B", "Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G"],
+  B: ["An", "A", "B", "Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G"],
+  "F#": ["An", "A", "B", "Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G"],
+  "C#": ["An", "A", "Bn", "Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G"],
+
+  // flats
+  F: ["A", "B", "Bn", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"],
+  Bb: ["A", "B", "Bn", "C", "Db", "D", "E", "En", "F", "Gb", "G", "Ab"],
+  Eb: ["An", "B", "Bn", "C", "Db", "D", "E", "En", "F", "Gb", "G", "A"],
+  Ab: ["An", "B", "Bn", "C", "D", "Dn", "E", "En", "F", "Gb", "G", "A"],
+  Db: ["An", "B", "Bn", "C", "D", "Dn", "E", "En", "F", "G", "Gn", "A"],
+  Gb: ["An", "B", "C", "Cn", "D", "Dn", "E", "En", "F", "G", "Gn", "A"],
+  Cb: ["An", "B", "C", "Cn", "D", "Dn", "E", "F", "Fn", "G", "Gn", "A"],
 }
 
-export const KEY_SIGNATURES_FLAT: Record<KeySignature, boolean | null> = {
-  Ab: true,
-  A: false,
-  Bb: true,
-  B: false,
-  Cb: true,
-  C: null,
-  "C#": false,
-  Db: true,
-  D: false,
-  Eb: true,
-  E: false,
-  F: true,
-  "F#": false,
-  Gb: true,
-  G: false,
+export function countAccidentals(keys: PitchClassMap<Key>): number {
+  const accidentals = ["b", "#", "n", "x"]
+
+  return keys.filter((key) => accidentals.some((acc) => key.includes(acc)))
+    .length
 }
-
-const FIFTHS_FROM_F: Array<NaturalKey> = ["F", "C", "G", "D", "A", "E", "B"]
-
-export const KEY_SIGNATURES: Array<KeySignature> = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "Ab",
-  "Bb",
-  "C#",
-  "Cb",
-  "Db",
-  "Eb",
-  "F#",
-  "Gb",
-]
-
-function flats(accidentals: number): Array<NaturalKey> {
-  return FIFTHS_FROM_F.slice(-accidentals)
-}
-
-function sharps(accidentals: number): Array<NaturalKey> {
-  return FIFTHS_FROM_F.slice(accidentals)
-}
-
-export const KEY_SIGNATURES_ACCIDENTALS: Record<
-  KeySignature,
-  Array<NaturalKey>
-> = Object.fromEntries(
-  KEY_SIGNATURES.map((keySignature) => {
-    const flat = KEY_SIGNATURES_FLAT[keySignature]
-    const count = KEY_SIGNATURES_ACCIDENTALS_COUNT[keySignature]
-
-    const accidentals = flat ? flats(count) : sharps(count)
-
-    return [keySignature, accidentals] as const
-  })
-) as never

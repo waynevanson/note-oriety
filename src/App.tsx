@@ -6,15 +6,15 @@ import { VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
 import {
-  KEY_SIGNATURES,
+  KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
+  KeySignatureDistinctKeyed,
   PITCH_CLASS_KINDS_PITCH_CLASS,
   PitchClassKind,
 } from "./lib"
 
 // todo: option to show chromatics
 export function App() {
-  const [signature, signatureSet] =
-    createSignal<(typeof KEY_SIGNATURES)[number]>("C")
+  const [signature, signatureSet] = createSignal<KeySignatureDistinctKeyed>("C")
 
   const [showChromatics, showChromaticsSet] = createSignal(false)
 
@@ -69,7 +69,7 @@ export function App() {
               signatureSet(e.currentTarget.value as never)
             }}
           >
-            {KEY_SIGNATURES.map((sig) => (
+            {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
               <option value={sig} selected={signature() == sig}>
                 {sig}
               </option>

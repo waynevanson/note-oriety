@@ -1,9 +1,14 @@
-export type AccidentalFlatKey = "Ab" | "Bb" | "Db" | "Eb" | "Gb"
+export type NormalKey = "A" | "B" | "C" | "D" | "E" | "F" | "G"
 
-export type AccidentalSharpKey = "A#" | "C#" | "D#" | "F#" | "G#"
+export type NaturalKeyAppend<T extends string> = NormalKey extends infer K
+  ? K extends string
+    ? `${K}${T}`
+    : never
+  : never
 
-export type AccidentalKey = AccidentalFlatKey | AccidentalSharpKey
+export type FlatKey = NaturalKeyAppend<"b">
+export type SharpKey = NaturalKeyAppend<"#">
+export type DoubleSharpKey = NaturalKeyAppend<"x">
+export type NaturalKey = NaturalKeyAppend<"n">
 
-export type NaturalKey = "A" | "B" | "C" | "D" | "E" | "F" | "G"
-
-export type Key = NaturalKey | AccidentalKey
+export type Key = NormalKey | DoubleSharpKey | SharpKey | FlatKey | NaturalKey

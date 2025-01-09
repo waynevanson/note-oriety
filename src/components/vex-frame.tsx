@@ -2,20 +2,18 @@ import { Accessor, createEffect, createMemo } from "solid-js"
 import { Factory, RendererBackends } from "vexflow"
 import styles from "./vex-frame.module.css"
 import {
-  KEY_SIGNATURES,
-  KEY_SIGNATURES_ACCIDENTALS,
-  KEY_SIGNATURES_ACCIDENTALS_COUNT,
-  KEY_SIGNATURES_FLAT,
-  KeySignature,
-  NaturalKey,
+  NormalKey,
   Key,
   PitchClassKind,
   PITCH_CLASS_KINDS_PITCH_CLASS,
+  KeySignatureDistinctKeyed,
+  countAccidentals,
+  KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
 } from "../lib"
 
 interface VexFlowProps {
   pitchClassKind: Accessor<PitchClassKind>
-  signature: Accessor<(typeof KEY_SIGNATURES)[number]>
+  signature: Accessor<KeySignatureDistinctKeyed>
 }
 
 const ID = "note-oriety-vex-flow"
@@ -30,13 +28,11 @@ const ID = "note-oriety-vex-flow"
 export function VexFrame(props: VexFlowProps) {
   let ref: HTMLDivElement | undefined
 
-  const pitchClass = createMemo(
+  const note = createMemo(
     () =>
-      PITCH_CLASS_KINDS_PITCH_CLASS[props.pitchClassKind()][0 as never] as Key
-  )
-
-  const note = createMemo(() =>
-    transposeAccidentalToVexFlow(props.signature(), pitchClass())
+      KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY[props.signature()][
+        props.pitchClassKind()
+      ]
   )
 
   createEffect((rerender: boolean) => {
@@ -46,7 +42,9 @@ export function VexFrame(props: VexFlowProps) {
       ref.innerHTML = ""
     }
 
-    const accidentalsCount = KEY_SIGNATURES_ACCIDENTALS_COUNT[props.signature()]
+    const accidentalsCount = countAccidentals(
+      KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY[props.signature()]
+    )
     const width = 100 + accidentalsCount * 10
 
     // todo: make relative to height relative to the clefs we display.
@@ -86,56 +84,4 @@ export function VexFrame(props: VexFlowProps) {
   }, false)
 
   return <div id={ID} ref={ref} />
-}
-
-// sound
-// score
-// clefs
-// create combinations, even multiple combinations.
-
-// VexFlow will show a sharp in the note even if the key signature implies that note.
-// We have to undo that.
-
-// todo: this could be replaced with the 0-11 number indexer, adding accidentals based on key
-function transposeAccidentalToVexFlow(
-  keySignature: KeySignature,
-  note: Key
-): string {
-  const accidentals = KEY_SIGNATURES_ACCIDENTALS[keySignature]
-  const flat = KEY_SIGNATURES_FLAT[keySignature]
-
-  // no accidentals: 'C'
-  if (flat === null || accidentals.length <= 0) {
-    return note
-  }
-
-  const normal = note.slice(0, 1) as NaturalKey
-
-  // note is always displayed as is
-  if (!accidentals.includes(normal)) {
-    return note
-  }
-
-  // display as natural when in key that implies it is sharp of flat
-  if (normal === note) {
-    return note + "n"
-  }
-
-  if (!flat) {
-    return normal
-  }
-
-  return NEXT[normal as unknown as never]
-}
-
-// transpot G -> A, A -> B
-
-const NEXT = {
-  G: "A",
-  A: "B",
-  B: "C",
-  C: "D",
-  D: "E",
-  E: "F",
-  F: "G",
 }
