@@ -3,7 +3,6 @@ import {
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KeySignatureDistinctKeyed,
 } from "../lib"
-import styles from "./control-panel.module.css"
 
 export interface ControlPanelProps {
   keySignature: KeySignatureDistinctKeyed
@@ -12,6 +11,8 @@ export interface ControlPanelProps {
   onChangeChromatics?(chromatic: boolean): void
   outcome: Record<"correct" | "incorrect", number>
   streak: number
+  clef: "bass" | "treble" | "alto"
+  onChangeClef?(clef: "bass" | "treble" | "alto"): void
 }
 
 export function ControlPanel(props: ControlPanelProps) {
@@ -38,6 +39,16 @@ export function ControlPanel(props: ControlPanelProps) {
             <option value={sig} selected={props.keySignature == sig}>
               {sig}
             </option>
+          ))}
+        </select>
+      </label>
+      <label for="input.clef">
+        <span> Clef </span>
+        <select
+          onChange={(e) => props?.onChangeClef?.(e.target.value as never)}
+        >
+          {["treble", "bass", "alto"].map((clef) => (
+            <option value={clef}>{clef}</option>
           ))}
         </select>
       </label>

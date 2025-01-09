@@ -7,11 +7,15 @@ import {
   countAccidentals,
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
 } from "../lib"
+import { Octave } from "../App"
+
+export type Clef = "bass" | "alto" | "treble"
 
 interface VexFlowProps {
   pitchClassKind: Accessor<PitchClassKind>
   signature: Accessor<KeySignatureDistinctKeyed>
-  octave: Accessor<4 | 5>
+  octave: Accessor<Octave>
+  clef: Clef
 }
 
 const ID = "note-oriety-vex-flow"
@@ -58,12 +62,15 @@ export function VexFrame(props: VexFlowProps) {
     })
 
     const score = factory.EasyScore()
-    const notes = score.notes(`${note()}${props.octave()}/w`)
+
+    const notes = score.notes(`${note()}${props.octave()}/w`, {
+      clef: props.clef,
+    })
 
     factory
       .System()
       .addStave({ voices: [score.voice(notes)] })
-      .addClef("treble")
+      .addClef(props.clef)
       .addKeySignature(props.signature())
 
     factory.draw()
