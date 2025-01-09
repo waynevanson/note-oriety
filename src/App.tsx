@@ -1,4 +1,4 @@
-import { createMemo, createSignal } from "solid-js"
+import { createMemo } from "solid-js"
 import "./App.css"
 import styles from "./App.module.css"
 import { ButtonGrid } from "./components/button-grid"
@@ -12,55 +12,67 @@ import {
   PitchClassKind,
 } from "./lib"
 
+export interface AppStore {
+  signature: KeySignatureDistinctKeyed
+  showChromatics: boolean
+  answer: PitchClassKind
+  outcome: Record<"correct" | "incorrect", number>
+  streak: number
+}
+
 // todo: option to show chromatics
 // todo: add bass and that middle clef
 // todo: generate more than 1 octave in ranges.
 export function App() {
-  const [signature, signatureSet] = createSignal<KeySignatureDistinctKeyed>("C")
-
-  const [showChromatics, showChromaticsSet] = createSignal(false)
-
   function createAnswer(): PitchClassKind {
     return Math.floor(
       Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
     ) as PitchClassKind
   }
 
-  const [answer, answerSet] = createSignal<PitchClassKind>(createAnswer())
+  const [store, storeSet] = createStore<AppStore>({
+    answer: createAnswer(),
+    outcome: { correct: 0, incorrect: 0 },
+    showChromatics: false,
+    signature: "C",
+    streak: 0,
+  })
 
-  const [outcome, outcomeSet] = createStore({ incorrect: 0, correct: 0 })
-  const total = createMemo(() => outcome.correct + outcome.incorrect)
-
-  const accuracy = createMemo(() =>
-    total() <= 0 ? 0 : Math.trunc(100 * (outcome.correct / total()))
+  const total = createMemo(
+    () => store.outcome.correct + store.outcome.incorrect
   )
 
-  const [streak, streakSet] = createSignal(0)
+  const accuracy = createMemo(() =>
+    total() <= 0 ? 0 : Math.trunc(100 * (store.outcome.correct / total()))
+  )
 
   function handleGuess(index: number) {
     // wrong guess
-    if (index !== answer()) {
-      streakSet(0)
-      outcomeSet("incorrect", (a) => a + 1)
+    if (index !== store.answer) {
+      storeSet("streak", 0)
+      storeSet("outcome", "incorrect", (a) => a + 1)
       return
     }
 
     // correct guess
-    streakSet((number) => number + 1)
-    outcomeSet("correct", (a) => a + 1)
+    storeSet("streak", (number) => number + 1)
+    storeSet("outcome", "correct", (a) => a + 1)
 
     // ensure answer isn't the same as before
     while (true) {
       const next = createAnswer()
-      if (next === answer()) continue
-      answerSet(next)
+      if (next === store.answer) continue
+      storeSet("answer", next)
       break
     }
   }
 
   return (
     <main class={styles.main}>
-      <VexFrame pitchClassKind={answer} signature={signature} />
+      <VexFrame
+        pitchClassKind={() => store.answer}
+        signature={() => store.signature}
+      />
       <section>
         <label for="input.key">
           <span>Key Signature </span>
@@ -68,11 +80,11 @@ export function App() {
             name="input.key"
             id="input.key"
             onChange={(e) => {
-              signatureSet(e.currentTarget.value as never)
+              storeSet("signature", e.currentTarget.value as never)
             }}
           >
             {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
-              <option value={sig} selected={signature() == sig}>
+              <option value={sig} selected={store.signature == sig}>
                 {sig}
               </option>
             ))}
@@ -83,19 +95,19 @@ export function App() {
             <span> Chromatics: </span>
             <input
               type="checkbox"
-              checked={showChromatics()}
+              checked={store.showChromatics}
               onChange={(event) =>
-                showChromaticsSet(event.currentTarget.checked)
+                storeSet("showChromatics", event.currentTarget.checked)
               }
             />
           </label>
         )}
-        <span> Streak: {streak()} </span>
+        <span> Streak: {store.streak} </span>
         <span>
-          Accuracy: {accuracy()}% ({outcome.correct} of {total()})
+          Accuracy: {accuracy()}% ({store.outcome.correct} of {total()})
         </span>
       </section>
-      <ButtonGrid answer={answer} onClick={handleGuess} />
+      <ButtonGrid answer={() => store.answer} onClick={handleGuess} />
     </main>
   )
 }
