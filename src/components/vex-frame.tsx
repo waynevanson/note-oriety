@@ -11,6 +11,7 @@ import {
 interface VexFlowProps {
   pitchClassKind: Accessor<PitchClassKind>
   signature: Accessor<KeySignatureDistinctKeyed>
+  octave: Accessor<4 | 5>
 }
 
 const ID = "note-oriety-vex-flow"
@@ -57,7 +58,7 @@ export function VexFrame(props: VexFlowProps) {
     })
 
     const score = factory.EasyScore()
-    const notes = score.notes(`${note()}4/w`)
+    const notes = score.notes(`${note()}${props.octave()}/w`)
 
     factory
       .System()

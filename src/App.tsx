@@ -18,24 +18,31 @@ export interface AppStore {
   answer: PitchClassKind
   outcome: Record<"correct" | "incorrect", number>
   streak: number
+  octave: 4 | 5
 }
 
-// todo: option to show chromatics
-// todo: add bass and that middle clef
-// todo: generate more than 1 octave in ranges.
-export function App() {
-  function createAnswer(): PitchClassKind {
-    return Math.floor(
-      Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
-    ) as PitchClassKind
-  }
+function createAnswer(): PitchClassKind {
+  return Math.floor(
+    Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
+  ) as PitchClassKind
+}
 
+function createOctave(): 4 | 5 {
+  return (Math.round(Math.random()) + 4) as never
+}
+
+// todo: generate more than 1 octave in ranges.
+// todo: create control panel
+// todo: add bass and that middle clef
+// todo: option to show chromatics
+export function App() {
   const [store, storeSet] = createStore<AppStore>({
     answer: createAnswer(),
     outcome: { correct: 0, incorrect: 0 },
     showChromatics: false,
     signature: "C",
     streak: 0,
+    octave: createOctave(),
   })
 
   const total = createMemo(
@@ -65,6 +72,8 @@ export function App() {
       storeSet("answer", next)
       break
     }
+
+    storeSet("octave", createOctave())
   }
 
   return (
@@ -72,6 +81,7 @@ export function App() {
       <VexFrame
         pitchClassKind={() => store.answer}
         signature={() => store.signature}
+        octave={() => store.octave}
       />
       <section>
         <label for="input.key">
