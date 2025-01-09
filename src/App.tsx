@@ -12,13 +12,17 @@ import {
   PitchClassKind,
 } from "./lib"
 
-export interface AppStore {
+export interface Note {
   signature: KeySignatureDistinctKeyed
+  pitchClassKind: PitchClassKind
+  octave: 4 | 5
+}
+
+export interface AppStore {
+  note: Note
   showChromatics: boolean
-  answer: PitchClassKind
   outcome: Record<"correct" | "incorrect", number>
   streak: number
-  octave: 4 | 5
 }
 
 function createAnswer(): PitchClassKind {
@@ -37,12 +41,14 @@ function createOctave(): 4 | 5 {
 // todo: option to show chromatics
 export function App() {
   const [store, storeSet] = createStore<AppStore>({
-    answer: createAnswer(),
+    note: {
+      pitchClassKind: createAnswer(),
+      octave: createOctave(),
+      signature: "C",
+    },
     outcome: { correct: 0, incorrect: 0 },
     showChromatics: false,
-    signature: "C",
     streak: 0,
-    octave: createOctave(),
   })
 
   const total = createMemo(
@@ -55,7 +61,7 @@ export function App() {
 
   function handleGuess(index: number) {
     // wrong guess
-    if (index !== store.answer) {
+    if (index !== store.note.pitchClassKind) {
       storeSet("streak", 0)
       storeSet("outcome", "incorrect", (a) => a + 1)
       return
@@ -68,20 +74,20 @@ export function App() {
     // ensure answer isn't the same as before
     while (true) {
       const next = createAnswer()
-      if (next === store.answer) continue
-      storeSet("answer", next)
+      if (next === store.note.pitchClassKind) continue
+      storeSet("note", "pitchClassKind", next)
       break
     }
 
-    storeSet("octave", createOctave())
+    storeSet("note", "octave", createOctave())
   }
 
   return (
     <main class={styles.main}>
       <VexFrame
-        pitchClassKind={() => store.answer}
-        signature={() => store.signature}
-        octave={() => store.octave}
+        pitchClassKind={() => store.note.pitchClassKind}
+        signature={() => store.note.signature}
+        octave={() => store.note.octave}
       />
       <section>
         <label for="input.key">
@@ -90,11 +96,11 @@ export function App() {
             name="input.key"
             id="input.key"
             onChange={(e) => {
-              storeSet("signature", e.currentTarget.value as never)
+              storeSet("note", "signature", e.currentTarget.value as never)
             }}
           >
             {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
-              <option value={sig} selected={store.signature == sig}>
+              <option value={sig} selected={store.note.signature == sig}>
                 {sig}
               </option>
             ))}
@@ -117,7 +123,10 @@ export function App() {
           Accuracy: {accuracy()}% ({store.outcome.correct} of {total()})
         </span>
       </section>
-      <ButtonGrid answer={() => store.answer} onClick={handleGuess} />
+      <ButtonGrid
+        answer={() => store.note.pitchClassKind}
+        onClick={handleGuess}
+      />
     </main>
   )
 }
