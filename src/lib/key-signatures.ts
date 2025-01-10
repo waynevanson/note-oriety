@@ -22,23 +22,24 @@ export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
   PitchClassMap<Key>
 > = {
   // sharps
-  C: ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"],
-  G: ["A", "A#", "B", "C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#"],
-  D: ["A", "A#", "B", "Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#"],
-  A: ["A", "A#", "B", "Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G"],
-  E: ["A", "A#", "B", "Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G"],
-  B: ["An", "A", "B", "Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G"],
-  "F#": ["An", "A", "B", "Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G"],
-  "C#": ["An", "A", "Bn", "Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G"],
+  C: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+  G: ["C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
+
+  D: ["Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
+  A: ["Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
+  E: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
+  B: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "An", "A", "B"],
+  "F#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "B"],
+  "C#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "Bn"],
 
   // flats
-  F: ["A", "B", "Bn", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"],
-  Bb: ["A", "B", "Bn", "C", "Db", "D", "E", "En", "F", "Gb", "G", "Ab"],
-  Eb: ["An", "B", "Bn", "C", "Db", "D", "E", "En", "F", "Gb", "G", "A"],
-  Ab: ["An", "B", "Bn", "C", "D", "Dn", "E", "En", "F", "Gb", "G", "A"],
-  Db: ["An", "B", "Bn", "C", "D", "Dn", "E", "En", "F", "G", "Gn", "A"],
-  Gb: ["An", "B", "C", "Cn", "D", "Dn", "E", "En", "F", "G", "Gn", "A"],
-  Cb: ["An", "B", "C", "Cn", "D", "Dn", "E", "F", "Fn", "G", "Gn", "A"],
+  F: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Bn"],
+  Bb: ["C", "Db", "D", "E", "En", "F", "Gb", "G", "Ab", "A", "B", "Bn"],
+  Eb: ["C", "Db", "D", "E", "En", "F", "Gb", "G", "A", "An", "B", "Bn"],
+  Ab: ["C", "D", "Dn", "E", "En", "F", "Gb", "G", "A", "An", "B", "Bn"],
+  Db: ["C", "D", "Dn", "E", "En", "F", "G", "Gn", "A", "An", "B", "Bn"],
+  Gb: ["Cn", "D", "Dn", "E", "En", "F", "G", "Gn", "A", "An", "B", "C"],
+  Cb: ["Cn", "D", "Dn", "E", "F", "Fn", "G", "Gn", "A", "An", "B", "C"],
 }
 
 export function countAccidentals(keys: PitchClassMap<Key>): number {

@@ -1,16 +1,16 @@
 export const PITCH_CLASS_KINDS_PITCH_CLASS = [
-  ["A", "An"],
-  ["A#", "Bb"],
-  ["B", "Bn", "Cb"],
-  ["C", "Cn", "B#"],
+  ["C"],
   ["C#", "Db"],
-  ["D", "Dn"],
+  ["D"],
   ["D#", "Eb"],
-  ["E", "En", "Fb"],
-  ["F", "Fn", "E#"],
+  ["E"],
+  ["F"],
   ["F#", "Gb"],
-  ["G", "Gn"],
+  ["G"],
   ["G#", "Ab"],
+  ["A"],
+  ["A#", "Bb"],
+  ["B"],
 ] as const
 
 export type PitchClassMap<A> = readonly [A, A, A, A, A, A, A, A, A, A, A, A]

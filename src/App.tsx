@@ -10,24 +10,27 @@ import {
   PitchClassKind,
 } from "./lib"
 import { ControlPanel } from "./components/control-panel"
+import { createMemo } from "solid-js"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
-const CLEF_MAP: Record<Clef, Record<Clef, number>> = {
-  treble: { treble: 0, alto: -1, bass: -2 },
-  alto: { treble: 1, alto: 0, bass: -1 },
-  bass: { bass: 0, alto: 1, treble: 2 },
+export type AltoOctave = 3 | 4
+
+const ALTO_CLEF_OFFSET_MAP: Record<Clef, number> = {
+  treble: 1,
+  alto: 0,
+  bass: -1,
 }
 
 export interface Note {
   signature: KeySignatureDistinctKeyed
   pitchClassKind: PitchClassKind
-  octave: Octave
 }
 
 export interface AppStore {
   note: Note
   clef: Clef
+  altoOctave: AltoOctave
   showChromatics: boolean
   outcome: Record<"correct" | "incorrect", number>
   streak: number
@@ -39,13 +42,12 @@ function createPitchClassKind(): PitchClassKind {
   ) as PitchClassKind
 }
 
-// trebl
-
-function createOctave(): Octave {
-  return (Math.round(Math.random() * 3) + 3) as never
+// change
+function createAltoOctave(): AltoOctave {
+  const number = Math.round(Math.random()) + 3
+  return number as never
 }
 
-// todo: add bass and that middle clef
 // todo: option to show chromatics
 
 // todo: when clef changes, regenerate octave with octave map
@@ -55,14 +57,31 @@ export function App() {
   const [store, storeSet] = createStore<AppStore>({
     note: {
       pitchClassKind: createPitchClassKind(),
-      octave: 5,
       signature: "C",
     },
+    altoOctave: 4,
     outcome: { correct: 0, incorrect: 0 },
     showChromatics: false,
     streak: 0,
     clef: "treble",
   })
+
+  const octave = createMemo(
+    () => (store.altoOctave + ALTO_CLEF_OFFSET_MAP[store.clef]) as Octave
+  )
+
+  function increment() {
+    // ensure answer isn't the same as before
+    let pitchClassKind
+    while (true) {
+      pitchClassKind = createPitchClassKind()
+      if (pitchClassKind === store.note.pitchClassKind) continue
+      storeSet("note", "pitchClassKind", pitchClassKind)
+      break
+    }
+
+    storeSet("altoOctave", createAltoOctave())
+  }
 
   function handleGuess(pitchClassKind: number) {
     // wrong guess
@@ -74,22 +93,12 @@ export function App() {
 
     // correct guess
     storeSet("streak", (number) => number + 1)
-    storeSet("outcome", "correct", (a) => a + 1)
+    storeSet("outcome", "correct", (correct) => correct + 1)
 
-    // ensure answer isn't the same as before
-    while (true) {
-      const next = createPitchClassKind()
-      if (next === store.note.pitchClassKind) continue
-      storeSet("note", "pitchClassKind", next)
-      break
-    }
-
-    storeSet("note", "octave", createOctave())
+    increment()
   }
 
   function handleOnChangeClef(clef: Clef) {
-    const offset = CLEF_MAP[store.clef][clef]
-    storeSet("note", "octave", (octave) => (octave + offset) as never)
     storeSet("clef", clef)
   }
 
@@ -98,7 +107,7 @@ export function App() {
       <VexFrame
         pitchClassKind={() => store.note.pitchClassKind}
         signature={() => store.note.signature}
-        octave={() => store.note.octave}
+        octave={octave}
         clef={store.clef}
       />
       <ControlPanel
