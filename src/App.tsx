@@ -11,6 +11,7 @@ import {
 } from "./lib"
 import { ControlPanel } from "./components/control-panel"
 import { createMemo } from "solid-js"
+import { Piano } from "./components/piano"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
@@ -104,6 +105,7 @@ export function App() {
 
   return (
     <main class={styles.main}>
+      <Piano />
       <VexFrame
         pitchClassKind={() => store.note.pitchClassKind}
         signature={() => store.note.signature}
