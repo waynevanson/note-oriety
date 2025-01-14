@@ -1,6 +1,5 @@
 .main {
   display: grid;
-  box-sizing: border-box;
   max-width: 40rem;
 
   gap: 1rem;
@@ -9,6 +8,7 @@
   margin: 0 auto;
   padding: 1rem;
 
-  grid-template-rows: minmax(auto, 50svh) auto 1fr;
+  grid-template-rows: minmax(auto, 50svh) repeat(2, auto);
   min-height: 100svh;
+  align-items: center;
 }
