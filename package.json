@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@solid-primitives/resize-observer": "^2.0.26",
+    "@stdlib/random": "^0.3.3",
     "normalize.css": "^8.0.1",
     "solid-js": "^1.9.3",
     "vexflow": "5.0.0-beta.0"

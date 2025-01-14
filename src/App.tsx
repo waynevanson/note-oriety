@@ -3,12 +3,7 @@ import styles from "./App.module.css"
 import { Clef, VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
-import {
-  KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND,
-  KeySignatureDistinctKeyed,
-  PITCH_CLASS_KINDS_PITCH_CLASS,
-  PitchClassKind,
-} from "./lib"
+import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
 import { ControlPanel } from "./components/control-panel"
 import { createMemo } from "solid-js"
 import { Piano } from "./components/piano"
@@ -33,32 +28,10 @@ export interface AppStore {
   streak: number
 }
 
-function createPitchClassKind(): PitchClassKind {
-  return Math.round(
-    Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length - 1
-  ) as PitchClassKind
-}
-
-function createPitchClassKindKey(
-  keySignature: KeySignatureDistinctKeyed
-): PitchClassKind {
-  const notes = KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND[keySignature]
-
-  const notesIndex = Math.round(Math.random() * 6) as 0 | 1 | 2 | 3 | 4 | 5 | 6
-
-  return notes[notesIndex]
-}
-
-// change
-function createAltoOctave(): AltoOctave {
-  const number = Math.round(Math.random()) + 3
-  return number as never
-}
-
 // todo: option to show chromatics
 export function App() {
   const [store, storeSet] = createStore<AppStore>({
-    pitchClassKind: createPitchClassKind(),
+    pitchClassKind: random.pitchClassKindChromatic(),
     signature: "C",
     altoOctave: 4,
     outcome: { correct: 0, incorrect: 0 },
@@ -76,14 +49,14 @@ export function App() {
     let pitchClassKind
     while (true) {
       pitchClassKind = store.showChromatics
-        ? createPitchClassKind()
-        : createPitchClassKindKey(store.signature)
+        ? random.pitchClassKindChromatic()
+        : random.pitchClassKindKeyed(store.signature)
       if (pitchClassKind === store.pitchClassKind) continue
       storeSet("pitchClassKind", pitchClassKind)
       break
     }
 
-    storeSet("altoOctave", createAltoOctave())
+    storeSet("altoOctave", random.altoOctave())
   }
 
   function handleOnChangeChromatics(show: boolean) {
