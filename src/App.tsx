@@ -34,8 +34,8 @@ export interface AppStore {
 }
 
 function createPitchClassKind(): PitchClassKind {
-  return Math.floor(
-    Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length
+  return Math.round(
+    Math.random() * PITCH_CLASS_KINDS_PITCH_CLASS.length - 1
   ) as PitchClassKind
 }
 
