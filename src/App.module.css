@@ -1,5 +1,7 @@
 .main {
-  display: grid;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   max-width: 40rem;
 
   gap: 1rem;
@@ -7,8 +9,7 @@
   background-color: #eee;
   margin: 0 auto;
   padding: 1rem;
-
-  grid-template-rows: minmax(auto, 50svh) repeat(2, auto);
   min-height: 100svh;
-  align-items: center;
+
+  justify-content: flex-end;
 }

@@ -42,11 +42,22 @@ export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
   Cb: ["Cn", "D", "Dn", "E", "F", "Fn", "G", "Gn", "A", "An", "B", "C"],
 }
 
-export function countAccidentals(keys: PitchClassMap<Key>): number {
-  const accidentals = ["b", "#", "n", "x"]
-
-  return keys.filter((key) => accidentals.some((acc) => key.includes(acc)))
-    .length
+export const ACCIDENTALS: Record<KeySignatureDistinctKeyed, number> = {
+  C: 0,
+  G: 1,
+  D: 2,
+  A: 3,
+  E: 4,
+  B: 5,
+  "F#": 6,
+  "C#": 7,
+  F: 1,
+  Bb: 2,
+  Eb: 3,
+  Ab: 4,
+  Db: 5,
+  Gb: 6,
+  Cb: 7,
 }
 
 type Array7<T> = readonly [T, T, T, T, T, T, T]

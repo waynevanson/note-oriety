@@ -4,8 +4,8 @@ import styles from "./vex-frame.module.css"
 import {
   PitchClassKind,
   KeySignatureDistinctKeyed,
-  countAccidentals,
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
+  ACCIDENTALS,
 } from "../lib"
 import { Octave } from "../App"
 
@@ -44,13 +44,12 @@ export function VexFrame(props: VexFlowProps) {
       ref.innerHTML = ""
     }
 
-    const accidentalsCount = countAccidentals(
-      KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY[props.signature()]
-    )
-    const width = 100 + accidentalsCount * 10
+    const width = 100 + ACCIDENTALS[props.signature()] * 10
 
     // todo: make relative to height relative to the clefs we display.
-    const height = 140
+    const height = 120
+    const y = 10
+    const viewport = `0 ${y} ${width} ${height - y}`
 
     const factory = new Factory({
       renderer: {
@@ -80,6 +79,7 @@ export function VexFrame(props: VexFlowProps) {
     // ensure we can size svg dynamically
     svg.removeAttribute("width")
     svg.removeAttribute("height")
+    svg.setAttribute("viewBox", viewport)
 
     // add custom classes
     svg.classList.add(styles.svg)

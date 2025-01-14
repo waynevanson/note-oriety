@@ -46,6 +46,21 @@
   background-color: #bbb;
 }
 
+/* 
+
+first number is index of note in the chromatic scale [0,11].
+second number is index of note in the C major scale [0,6].
+
+For margin-left
+- Scale down so it equals the left side of the container.
+- Convert 100% = 1/12 (number of all keys) to be 100% = 1/7 (number of white keys)
+- Scale up so it equals the left margin + 1 / 8 (width of a note).
+
+fn left(p, x, y)  = (-p * (x + 0) + p * 12 / 7 * (y + 0))
+fn right(p, x, y) = (p * (x + 1) - p * 12 / 7 * (y + 1))
+
+*/
+
 /* 0, 0 */
 .c {
   margin-left: calc(-100% * 0 + 100% * 12 / 7 * 0);
