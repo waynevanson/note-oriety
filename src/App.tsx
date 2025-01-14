@@ -23,13 +23,9 @@ const ALTO_CLEF_OFFSET_MAP: Record<Clef, number> = {
   bass: -1,
 }
 
-export interface Note {
+export interface AppStore {
   signature: KeySignatureDistinctKeyed
   pitchClassKind: PitchClassKind
-}
-
-export interface AppStore {
-  note: Note
   clef: Clef
   altoOctave: AltoOctave
   showChromatics: boolean
@@ -56,10 +52,8 @@ function createAltoOctave(): AltoOctave {
 // offset it.
 export function App() {
   const [store, storeSet] = createStore<AppStore>({
-    note: {
-      pitchClassKind: createPitchClassKind(),
-      signature: "C",
-    },
+    pitchClassKind: createPitchClassKind(),
+    signature: "C",
     altoOctave: 4,
     outcome: { correct: 0, incorrect: 0 },
     showChromatics: false,
@@ -76,8 +70,8 @@ export function App() {
     let pitchClassKind
     while (true) {
       pitchClassKind = createPitchClassKind()
-      if (pitchClassKind === store.note.pitchClassKind) continue
-      storeSet("note", "pitchClassKind", pitchClassKind)
+      if (pitchClassKind === store.pitchClassKind) continue
+      storeSet("pitchClassKind", pitchClassKind)
       break
     }
 
@@ -86,7 +80,7 @@ export function App() {
 
   function handleGuess(pitchClassKind: number) {
     // wrong guess
-    if (pitchClassKind !== store.note.pitchClassKind) {
+    if (pitchClassKind !== store.pitchClassKind) {
       storeSet("streak", 0)
       storeSet("outcome", "incorrect", (a) => a + 1)
       return
@@ -106,21 +100,21 @@ export function App() {
   return (
     <main class={styles.main}>
       <VexFrame
-        pitchClassKind={() => store.note.pitchClassKind}
-        signature={() => store.note.signature}
+        pitchClassKind={() => store.pitchClassKind}
+        signature={() => store.signature}
         octave={octave}
         clef={store.clef}
       />
       <ControlPanel
         chromatics={store.showChromatics}
-        keySignature={store.note.signature}
+        keySignature={store.signature}
         outcome={store.outcome}
         streak={store.streak}
         onChangeChromatics={(chromatics) =>
           storeSet("showChromatics", chromatics)
         }
         onChangeKeySignature={(keySignature) =>
-          storeSet("note", "signature", keySignature)
+          storeSet("signature", keySignature)
         }
         onChangeClef={handleOnChangeClef}
         clef={store.clef}
