@@ -79,6 +79,9 @@ export function VexFrame(props: VexFlowProps) {
     // ensure we can size svg dynamically
     svg.removeAttribute("width")
     svg.removeAttribute("height")
+    svg.removeAttribute("style")
+
+    // cut off some of the thing
     svg.setAttribute("viewBox", viewport)
 
     // add custom classes
