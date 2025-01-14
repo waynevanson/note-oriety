@@ -46,10 +46,6 @@ function createAltoOctave(): AltoOctave {
 }
 
 // todo: option to show chromatics
-
-// todo: when clef changes, regenerate octave with octave map
-// todo: our pitchClassIndex range (octave) isn't the same as our clef range.
-// offset it.
 export function App() {
   const [store, storeSet] = createStore<AppStore>({
     pitchClassKind: createPitchClassKind(),
