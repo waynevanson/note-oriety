@@ -105,7 +105,6 @@ export function App() {
 
   return (
     <main class={styles.main}>
-      <Piano />
       <VexFrame
         pitchClassKind={() => store.note.pitchClassKind}
         signature={() => store.note.signature}
@@ -126,10 +125,7 @@ export function App() {
         onChangeClef={handleOnChangeClef}
         clef={store.clef}
       />
-      <ButtonGrid
-        answer={() => store.note.pitchClassKind}
-        onClick={handleGuess}
-      />
+      <Piano onClick={(kind) => handleGuess(kind)} />
     </main>
   )
 }
