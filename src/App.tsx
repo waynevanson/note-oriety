@@ -1,11 +1,9 @@
 import "./App.css"
 import styles from "./App.module.css"
-import { ButtonGrid } from "./components/button-grid"
 import { Clef, VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
 import {
-  KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND,
   KeySignatureDistinctKeyed,
   PITCH_CLASS_KINDS_PITCH_CLASS,
