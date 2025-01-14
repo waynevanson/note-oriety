@@ -47,23 +47,21 @@ export function ControlPanel(props: ControlPanelProps) {
         <select
           onChange={(e) => props?.onChangeClef?.(e.target.value as never)}
         >
-          {["treble", "bass", "alto"].map((clef) => (
+          {["treble", "alto", "bass"].map((clef) => (
             <option value={clef}>{clef}</option>
           ))}
         </select>
       </label>
-      {false && (
-        <label for="input.chromatics">
-          <span> Chromatics: </span>
-          <input
-            type="checkbox"
-            checked={props.chromatics}
-            onChange={(event) =>
-              props.onChangeChromatics?.(event.currentTarget.checked)
-            }
-          />
-        </label>
-      )}
+      <label for="input.chromatics">
+        <span> Chromatics: </span>
+        <input
+          type="checkbox"
+          checked={props.chromatics}
+          onChange={(event) =>
+            props.onChangeChromatics?.(event.currentTarget.checked)
+          }
+        />
+      </label>
       <span> Streak: {props.streak} </span>
       <span>
         Accuracy: {accuracy()}% ({props.outcome.correct} of {total()})

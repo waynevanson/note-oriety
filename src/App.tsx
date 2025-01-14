@@ -5,6 +5,8 @@ import { Clef, VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
 import {
+  KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
+  KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND,
   KeySignatureDistinctKeyed,
   PITCH_CLASS_KINDS_PITCH_CLASS,
   PitchClassKind,
@@ -39,6 +41,16 @@ function createPitchClassKind(): PitchClassKind {
   ) as PitchClassKind
 }
 
+function createPitchClassKindKey(
+  keySignature: KeySignatureDistinctKeyed
+): PitchClassKind {
+  const notes = KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND[keySignature]
+
+  const notesIndex = Math.round(Math.random() * 6) as 0 | 1 | 2 | 3 | 4 | 5 | 6
+
+  return notes[notesIndex]
+}
+
 // change
 function createAltoOctave(): AltoOctave {
   const number = Math.round(Math.random()) + 3
@@ -52,7 +64,7 @@ export function App() {
     signature: "C",
     altoOctave: 4,
     outcome: { correct: 0, incorrect: 0 },
-    showChromatics: false,
+    showChromatics: true,
     streak: 0,
     clef: "treble",
   })
@@ -65,13 +77,22 @@ export function App() {
     // ensure answer isn't the same as before
     let pitchClassKind
     while (true) {
-      pitchClassKind = createPitchClassKind()
+      pitchClassKind = store.showChromatics
+        ? createPitchClassKind()
+        : createPitchClassKindKey(store.signature)
       if (pitchClassKind === store.pitchClassKind) continue
       storeSet("pitchClassKind", pitchClassKind)
       break
     }
 
     storeSet("altoOctave", createAltoOctave())
+  }
+
+  function handleOnChangeChromatics(show: boolean) {
+    storeSet("showChromatics", show)
+
+    // todo: don't increment if we're the note is in the same key
+    increment()
   }
 
   function handleGuess(pitchClassKind: number) {
@@ -106,9 +127,7 @@ export function App() {
         keySignature={store.signature}
         outcome={store.outcome}
         streak={store.streak}
-        onChangeChromatics={(chromatics) =>
-          storeSet("showChromatics", chromatics)
-        }
+        onChangeChromatics={handleOnChangeChromatics}
         onChangeKeySignature={(keySignature) =>
           storeSet("signature", keySignature)
         }

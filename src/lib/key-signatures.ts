@@ -1,5 +1,5 @@
 import { NormalKey, FlatKey, SharpKey, Key } from "./key"
-import { PitchClassMap } from "./pitch-class"
+import { PitchClassKind, PitchClassMap } from "./pitch-class"
 
 export type KeySignatureAll = NormalKey | FlatKey | SharpKey
 
@@ -21,10 +21,10 @@ export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
   KeySignatureDistinctKeyed,
   PitchClassMap<Key>
 > = {
-  // sharps
   C: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
-  G: ["C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
 
+  // sharps
+  G: ["C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
   D: ["Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
   A: ["Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
   E: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
@@ -47,4 +47,31 @@ export function countAccidentals(keys: PitchClassMap<Key>): number {
 
   return keys.filter((key) => accidentals.some((acc) => key.includes(acc)))
     .length
+}
+
+type Array7<T> = readonly [T, T, T, T, T, T, T]
+
+export const KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND: Record<
+  KeySignatureDistinctKeyed,
+  Array7<PitchClassKind>
+> = {
+  C: [0, 2, 4, 5, 7, 9, 11],
+
+  // sharps
+  G: [7, 9, 11, 0, 2, 4, 6],
+  D: [2, 4, 6, 7, 9, 11, 1],
+  A: [9, 11, 1, 2, 4, 6, 8],
+  E: [4, 6, 8, 9, 11, 1, 3],
+  B: [11, 1, 3, 4, 6, 8, 10],
+  "F#": [6, 7, 9, 10, 0, 2, 4],
+  "C#": [1, 3, 5, 6, 8, 10, 0],
+
+  // flats
+  F: [5, 7, 9, 10, 0, 2, 4],
+  Bb: [10, 0, 2, 3, 5, 7, 9],
+  Eb: [3, 5, 7, 8, 10, 0, 2],
+  Ab: [8, 10, 0, 1, 3, 5, 7],
+  Db: [1, 3, 5, 6, 8, 10, 0],
+  Gb: [6, 8, 10, 11, 1, 3, 5],
+  Cb: [11, 1, 3, 4, 6, 8, 10],
 }
