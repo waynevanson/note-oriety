@@ -1,5 +1,5 @@
 import { PitchClassKind } from "../lib"
-import "./piano.css"
+import styles from "./piano.module.css"
 
 export interface PianoProps {
   onClick?(kind: PitchClassKind): void
@@ -8,22 +8,22 @@ export interface PianoProps {
 // todo: componentise without the css module
 export function Piano(props: PianoProps) {
   return (
-    <ul class="piano">
+    <ul class={styles.piano}>
       {[
-        "white c",
-        "black cs",
-        "white d",
-        "black ds",
-        "white e",
-        "white f",
-        "black fs",
-        "white g",
-        "black gs",
-        "white a",
-        "black as",
-        "white b",
+        `${styles.white} ${styles.c}`,
+        `${styles.black} ${styles.cs}`,
+        `${styles.white} ${styles.d}`,
+        `${styles.black} ${styles.ds}`,
+        `${styles.white} ${styles.e}`,
+        `${styles.white} ${styles.f}`,
+        `${styles.black} ${styles.fs}`,
+        `${styles.white} ${styles.g}`,
+        `${styles.black} ${styles.gs}`,
+        `${styles.white} ${styles.a}`,
+        `${styles.black} ${styles.s}`,
+        `${styles.white} ${styles.b}`,
       ].map((className, index) => (
-        <Key class={className} kind={index as never} />
+        <Key class={className} kind={index as never} onClick={props.onClick} />
       ))}
     </ul>
   )
@@ -39,7 +39,7 @@ export function Key(props: KeyProps) {
   return (
     <li
       tabindex="0"
-      class={`key ${props.class}`}
+      class={`${styles.key} ${props.class}`}
       onClick={() => props.onClick?.(props.kind)}
     />
   )
