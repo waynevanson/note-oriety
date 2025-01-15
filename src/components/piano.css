@@ -23,6 +23,7 @@
   height: 55%;
   z-index: 2;
   margin: 0 -50%;
+  filter: drop-shadow(0 0.2rem 0.1rem rgba(0, 0, 0, 0.3));
 }
 
 .black:hover {
@@ -36,6 +37,7 @@
 .white {
   background-color: #eee;
   z-index: 1;
+  filter: drop-shadow(0 0.2rem 0.1rem rgba(0, 0, 0, 0.3));
 }
 
 .white:hover {
