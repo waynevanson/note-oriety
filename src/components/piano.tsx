@@ -5,6 +5,7 @@ export interface PianoProps {
   onClick?(kind: PitchClassKind): void
 }
 
+// todo: componentise without the css module
 export function Piano(props: PianoProps) {
   return (
     <ul class="piano">

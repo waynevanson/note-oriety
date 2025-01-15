@@ -2,6 +2,7 @@ import {
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KeySignatureDistinctKeyed,
 } from "../lib"
+import styles from "./control-panel.module.css"
 
 export interface ControlPanelProps {
   keySignature: KeySignatureDistinctKeyed
@@ -14,7 +15,7 @@ export interface ControlPanelProps {
 
 export function ControlPanel(props: ControlPanelProps) {
   return (
-    <div>
+    <div class={styles.panel}>
       <label for="input.key">
         <span>Key Signature </span>
         <select
@@ -42,7 +43,7 @@ export function ControlPanel(props: ControlPanelProps) {
         </select>
       </label>
       <label for="input.chromatics">
-        <span> Chromatics: </span>
+        <span> Chromatics </span>
         <input
           type="checkbox"
           checked={props.chromatics}

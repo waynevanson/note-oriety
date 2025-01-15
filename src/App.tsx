@@ -90,23 +90,26 @@ export function App() {
 
   return (
     <main class={styles.main}>
-      <ScoreBoard outcome={store.outcome} streak={store.streak} />
       <VexFrame
         pitchClassKind={() => store.pitchClassKind}
         signature={() => store.signature}
         octave={octave}
         clef={store.clef}
       />
-      <ControlPanel
-        chromatics={store.showChromatics}
-        keySignature={store.signature}
-        onChangeChromatics={handleOnChangeChromatics}
-        onChangeKeySignature={(keySignature) =>
-          storeSet("signature", keySignature)
-        }
-        onChangeClef={handleOnChangeClef}
-        clef={store.clef}
-      />
+
+      <div class={styles.panel}>
+        <ScoreBoard outcome={store.outcome} streak={store.streak} />
+        <ControlPanel
+          chromatics={store.showChromatics}
+          keySignature={store.signature}
+          onChangeChromatics={handleOnChangeChromatics}
+          onChangeKeySignature={(keySignature) =>
+            storeSet("signature", keySignature)
+          }
+          onChangeClef={handleOnChangeClef}
+          clef={store.clef}
+        />
+      </div>
       <Piano onClick={(kind) => handleGuess(kind)} />
     </main>
   )

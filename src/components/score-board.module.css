@@ -1,6 +1,7 @@
 .list {
-  display: table;
+  display: inline-table;
   width: fit-content;
+  border-spacing: 0.5rem;
 }
 
 .list > div {
@@ -9,10 +10,8 @@
 
 .list > div > dt {
   display: table-cell;
-  padding: 0.2rem 0.5rem;
 }
 
 .list > div > dd {
   display: table-cell;
-  padding: 0.2rem;
 }
