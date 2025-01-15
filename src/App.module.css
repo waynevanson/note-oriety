@@ -11,5 +11,5 @@
   padding: 1rem;
   min-height: 100svh;
 
-  justify-content: flex-end;
+  justify-content: space-between;
 }

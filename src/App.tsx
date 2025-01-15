@@ -7,12 +7,15 @@ import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
 import { ControlPanel } from "./components/control-panel"
 import { createMemo } from "solid-js"
 import { Piano } from "./components/piano"
+import { ScoreBoard } from "./components/score-board"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
 export type AltoOctave = 3 | 4
 
-const ALTO_CLEF_OFFSET_MAP: Record<Clef, number> = {
+export type Offset = -1 | 0 | 1
+
+const ALTO_CLEF_OFFSET_MAP: Record<Clef, Offset> = {
   treble: 1,
   alto: 0,
   bass: -1,
@@ -87,6 +90,7 @@ export function App() {
 
   return (
     <main class={styles.main}>
+      <ScoreBoard outcome={store.outcome} streak={store.streak} />
       <VexFrame
         pitchClassKind={() => store.pitchClassKind}
         signature={() => store.signature}
@@ -96,8 +100,6 @@ export function App() {
       <ControlPanel
         chromatics={store.showChromatics}
         keySignature={store.signature}
-        outcome={store.outcome}
-        streak={store.streak}
         onChangeChromatics={handleOnChangeChromatics}
         onChangeKeySignature={(keySignature) =>
           storeSet("signature", keySignature)

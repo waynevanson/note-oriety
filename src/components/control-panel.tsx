@@ -1,4 +1,3 @@
-import { createMemo } from "solid-js"
 import {
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KeySignatureDistinctKeyed,
@@ -9,21 +8,11 @@ export interface ControlPanelProps {
   onChangeKeySignature?(keySignature: KeySignatureDistinctKeyed): void
   chromatics: boolean
   onChangeChromatics?(chromatic: boolean): void
-  outcome: Record<"correct" | "incorrect", number>
-  streak: number
   clef: "bass" | "treble" | "alto"
   onChangeClef?(clef: "bass" | "treble" | "alto"): void
 }
 
 export function ControlPanel(props: ControlPanelProps) {
-  const total = createMemo(
-    () => props.outcome.correct + props.outcome.incorrect
-  )
-
-  const accuracy = createMemo(() =>
-    total() <= 0 ? 0 : Math.trunc(100 * (props.outcome.correct / total()))
-  )
-
   return (
     <div>
       <label for="input.key">
@@ -62,10 +51,6 @@ export function ControlPanel(props: ControlPanelProps) {
           }
         />
       </label>
-      <span> Streak: {props.streak} </span>
-      <span>
-        Accuracy: {accuracy()}% ({props.outcome.correct} of {total()})
-      </span>
     </div>
   )
 }
