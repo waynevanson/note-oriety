@@ -23,11 +23,24 @@ export function Piano(props: PianoProps) {
         "black as",
         "white b",
       ].map((className, index) => (
-        <li
-          class={`key ${className}`}
-          onClick={() => props.onClick?.(index as never)}
-        />
+        <Key class={className} kind={index as never} />
       ))}
     </ul>
+  )
+}
+
+export interface KeyProps {
+  class: string
+  kind: PitchClassKind
+  onClick?(kind: PitchClassKind): void
+}
+
+export function Key(props: KeyProps) {
+  return (
+    <li
+      tabindex="0"
+      class={`key ${props.class}`}
+      onClick={() => props.onClick?.(props.kind)}
+    />
   )
 }
