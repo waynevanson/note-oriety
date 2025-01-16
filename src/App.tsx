@@ -100,18 +100,19 @@ export function App() {
         clef={store.clef}
       />
 
-      <Panel
-        chromatics={store.showChromatics}
-        clef={store.clef}
-        keySignature={store.signature}
-        outcome={store.outcome}
-        streak={store.streak}
-        onChangeChromatics={handleOnChangeChromatics}
-        onChangeClef={handleOnChangeClef}
-        onChangeKeySignature={handleOnChangeKeySignature}
-      />
-
-      <Piano onClick={(kind) => handleGuess(kind)} />
+      <div class={styles.inputs}>
+        <Panel
+          chromatics={store.showChromatics}
+          clef={store.clef}
+          keySignature={store.signature}
+          outcome={store.outcome}
+          streak={store.streak}
+          onChangeChromatics={handleOnChangeChromatics}
+          onChangeClef={handleOnChangeClef}
+          onChangeKeySignature={handleOnChangeKeySignature}
+        />
+        <Piano onClick={(kind) => handleGuess(kind)} />
+      </div>
     </main>
   )
 }

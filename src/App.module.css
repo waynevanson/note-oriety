@@ -13,3 +13,8 @@
 
   justify-content: space-between;
 }
+
+.inputs {
+  display: grid;
+  gap: 2rem;
+}
