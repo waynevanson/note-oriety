@@ -1,9 +1,6 @@
 .panel {
   display: inline-table;
   border-spacing: 0.5rem;
-  text-align: right;
-  width: fit-content;
-  align-self: flex-end;
 }
 
 .panel > label {

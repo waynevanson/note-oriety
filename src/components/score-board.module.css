@@ -1,6 +1,5 @@
 .list {
   display: inline-table;
-  width: fit-content;
   border-spacing: 0.5rem;
 }
 
@@ -8,10 +7,6 @@
   display: table-row;
 }
 
-.list > div > dt {
-  display: table-cell;
-}
-
-.list > div > dd {
+.list > div > * {
   display: table-cell;
 }
