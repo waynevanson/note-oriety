@@ -13,11 +13,3 @@
 .panel > label > * {
   display: table-cell;
 }
-
-.panel > label > *:nth-child(n + 1) {
-  width: fit-content;
-}
-
-.panel > label > *:nth-child(0) {
-  width: fit-content;
-}
