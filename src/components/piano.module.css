@@ -1,7 +1,7 @@
 .piano {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  aspect-ratio: 2.5;
+  aspect-ratio: 2.3;
 }
 
 .key {
