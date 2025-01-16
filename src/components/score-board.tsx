@@ -21,9 +21,6 @@ export function ScoreBoard(props: ScoreBoardProps) {
       <div class={styles.accuracy}>
         <dt>Accuracy</dt>
         <dd>{accuracy()}%</dd>
-        <dd>
-          ({props.outcome.correct} of {total()})
-        </dd>
       </div>
     </dl>
   )
