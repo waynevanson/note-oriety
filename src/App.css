@@ -3,3 +3,7 @@ body {
   background-color: #333;
   min-height: 100svh;
 }
+
+:root {
+  --color-background: oklch(90% 2% 290deg);
+}
