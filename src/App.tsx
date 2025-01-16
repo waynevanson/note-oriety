@@ -4,7 +4,7 @@ import { Clef, VexFrame } from "./components/vex-frame"
 import "./reset.css"
 import { createStore } from "solid-js/store"
 import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
-import { ControlPanel } from "./components/control-panel"
+import { Controls } from "./components/control-panel"
 import { createMemo } from "solid-js"
 import { Piano } from "./components/piano"
 import { ScoreBoard } from "./components/score-board"
@@ -99,7 +99,7 @@ export function App() {
 
       <div class={styles.panel}>
         <ScoreBoard outcome={store.outcome} streak={store.streak} />
-        <ControlPanel
+        <Controls
           chromatics={store.showChromatics}
           keySignature={store.signature}
           onChangeChromatics={handleOnChangeChromatics}

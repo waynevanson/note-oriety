@@ -4,7 +4,7 @@ import {
 } from "../lib"
 import styles from "./control-panel.module.css"
 
-export interface ControlPanelProps {
+export interface ControlProps {
   keySignature: KeySignatureDistinctKeyed
   onChangeKeySignature?(keySignature: KeySignatureDistinctKeyed): void
   chromatics: boolean
@@ -13,7 +13,7 @@ export interface ControlPanelProps {
   onChangeClef?(clef: "bass" | "treble" | "alto"): void
 }
 
-export function ControlPanel(props: ControlPanelProps) {
+export function Controls(props: ControlProps) {
   return (
     <div class={styles.panel}>
       <label for="input.key">
