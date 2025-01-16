@@ -1,13 +1,12 @@
+import { createMemo } from "solid-js"
+import { createStore } from "solid-js/store"
 import "./App.css"
 import styles from "./App.module.css"
-import { Clef, VexFrame } from "./components/vex-frame"
-import "./reset.css"
-import { createStore } from "solid-js/store"
-import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
-import { Controls } from "./components/control-panel"
-import { createMemo } from "solid-js"
+import { Panel } from "./components/panel"
 import { Piano } from "./components/piano"
-import { ScoreBoard } from "./components/score-board"
+import { Clef, VexFrame } from "./components/vex-frame"
+import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
+import "./reset.css"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
@@ -88,6 +87,10 @@ export function App() {
     storeSet("clef", clef)
   }
 
+  function handleOnChangeKeySignature(keySignature: KeySignatureDistinctKeyed) {
+    storeSet("signature", keySignature)
+  }
+
   return (
     <main class={styles.main}>
       <VexFrame
@@ -97,19 +100,17 @@ export function App() {
         clef={store.clef}
       />
 
-      <div class={styles.panel}>
-        <ScoreBoard outcome={store.outcome} streak={store.streak} />
-        <Controls
-          chromatics={store.showChromatics}
-          keySignature={store.signature}
-          onChangeChromatics={handleOnChangeChromatics}
-          onChangeKeySignature={(keySignature) =>
-            storeSet("signature", keySignature)
-          }
-          onChangeClef={handleOnChangeClef}
-          clef={store.clef}
-        />
-      </div>
+      <Panel
+        chromatics={store.showChromatics}
+        clef={store.clef}
+        keySignature={store.signature}
+        outcome={store.outcome}
+        streak={store.streak}
+        onChangeChromatics={handleOnChangeChromatics}
+        onChangeClef={handleOnChangeClef}
+        onChangeKeySignature={handleOnChangeKeySignature}
+      />
+
       <Piano onClick={(kind) => handleGuess(kind)} />
     </main>
   )

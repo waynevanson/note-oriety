@@ -2,7 +2,7 @@ import {
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KeySignatureDistinctKeyed,
 } from "../lib"
-import styles from "./control-panel.module.css"
+import styles from "./controls.module.css"
 
 export interface ControlProps {
   keySignature: KeySignatureDistinctKeyed
