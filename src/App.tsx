@@ -45,7 +45,7 @@ const initialAppStore: AppStore = {
   streak: 0,
   clef: "treble",
 }
-// todo: option to show chromatics
+
 export function App() {
   const [store, storeSet] = makePersisted(
     createStore<AppStore>(structuredClone(initialAppStore))
@@ -72,8 +72,6 @@ export function App() {
 
   function handleOnChangeChromatics(show: boolean) {
     storeSet("showChromatics", show)
-
-    // todo: don't increment if we're the note is in the same key
 
     const kinds = KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND[store.signature]
     if (kinds.includes(store.pitchClassKind)) return
