@@ -5,7 +5,12 @@ import styles from "./App.module.css"
 import { Panel } from "./components/panel"
 import { Piano } from "./components/piano"
 import { Clef, VexFrame } from "./components/vex-frame"
-import { KeySignatureDistinctKeyed, PitchClassKind, random } from "./lib"
+import {
+  KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND,
+  KeySignatureDistinctKeyed,
+  PitchClassKind,
+  random,
+} from "./lib"
 import "./reset.css"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
@@ -65,6 +70,10 @@ export function App() {
     storeSet("showChromatics", show)
 
     // todo: don't increment if we're the note is in the same key
+
+    const kinds = KEY_SIGNATURE_DISTINCT_SCALE_PITCH_CLASS_KIND[store.signature]
+    if (kinds.includes(store.pitchClassKind)) return
+
     increment()
   }
 
