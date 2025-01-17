@@ -14,6 +14,7 @@ export interface PanelProps {
   onChangeClef?(clef: Clef): void
   streak: number
   outcome: Record<"correct" | "incorrect", number>
+  onClickReset?(): void
 }
 
 export function Panel(props: PanelProps) {

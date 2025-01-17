@@ -35,17 +35,20 @@ export interface AppStore {
   streak: number
 }
 
+const initialAppStore: AppStore = {
+  pitchClassKind: random.pitchClassKindChromatic(),
+  signature: "C",
+  altoOctave: 4,
+  outcome: { correct: 0, incorrect: 0 },
+  showChromatics: true,
+  streak: 0,
+  clef: "treble",
+}
 // todo: option to show chromatics
 export function App() {
-  const [store, storeSet] = createStore<AppStore>({
-    pitchClassKind: random.pitchClassKindChromatic(),
-    signature: "C",
-    altoOctave: 4,
-    outcome: { correct: 0, incorrect: 0 },
-    showChromatics: true,
-    streak: 0,
-    clef: "treble",
-  })
+  const [store, storeSet] = createStore<AppStore>(
+    structuredClone(initialAppStore)
+  )
 
   const octave = createMemo(
     () => (store.altoOctave + ALTO_CLEF_OFFSET_MAP[store.clef]) as Octave
@@ -100,6 +103,10 @@ export function App() {
     storeSet("signature", keySignature)
   }
 
+  function handleOnClickReset() {
+    storeSet(structuredClone(initialAppStore))
+  }
+
   return (
     <main class={styles.main}>
       <VexFrame
@@ -119,6 +126,7 @@ export function App() {
           onChangeChromatics={handleOnChangeChromatics}
           onChangeClef={handleOnChangeClef}
           onChangeKeySignature={handleOnChangeKeySignature}
+          onClickReset={handleOnClickReset}
         />
         <Piano onClick={(kind) => handleGuess(kind)} />
       </div>

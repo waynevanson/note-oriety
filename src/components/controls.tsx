@@ -13,6 +13,7 @@ export interface ControlProps {
   onChangeChromatics?(chromatic: boolean): void
   clef: Clef
   onChangeClef?(clef: Clef): void
+  onClickReset?(): void
 }
 
 export function Controls(props: ControlProps) {
@@ -42,6 +43,7 @@ export function Controls(props: ControlProps) {
           }
         />
       </label>
+      <button onClick={() => props?.onClickReset?.()}>Reset</button>
     </div>
   )
 }
