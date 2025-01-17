@@ -45,16 +45,16 @@ export const KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND: Record<
 
 export const KEY_SIGNATURE_C_PITCH_CLASS_KIND: PitchClassMap<Key> = [
   "C",
-  "C#",
+  "Db",
   "D",
-  "D#",
+  "Eb",
   "E",
   "F",
-  "F#",
+  "Gb",
   "G",
-  "G#",
+  "Ab",
   "A",
-  "A#",
+  "Bb",
   "B",
 ]
 
