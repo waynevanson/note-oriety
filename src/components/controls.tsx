@@ -1,18 +1,18 @@
 import {
-  KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
   KEY_SIGNATURE_FLATS_PITCH_CLASS_KIND,
   KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND,
   KeySignatureDistinctKeyed,
 } from "../lib"
 import styles from "./controls.module.css"
+import { Clef } from "./vex-frame"
 
 export interface ControlProps {
   keySignature: KeySignatureDistinctKeyed
   onChangeKeySignature?(keySignature: KeySignatureDistinctKeyed): void
   chromatics: boolean
   onChangeChromatics?(chromatic: boolean): void
-  clef: "bass" | "treble" | "alto"
-  onChangeClef?(clef: "bass" | "treble" | "alto"): void
+  clef: Clef
+  onChangeClef?(clef: Clef): void
 }
 
 export function Controls(props: ControlProps) {

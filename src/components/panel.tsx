@@ -3,14 +3,15 @@ import { KeySignatureDistinctKeyed } from "../lib"
 import { Controls } from "./controls"
 import { ScoreBoard } from "./score-board"
 import styles from "./panel.module.css"
+import { Clef } from "./vex-frame"
 
 export interface PanelProps {
   keySignature: KeySignatureDistinctKeyed
   onChangeKeySignature?(keySignature: KeySignatureDistinctKeyed): void
   chromatics: boolean
   onChangeChromatics?(chromatic: boolean): void
-  clef: "bass" | "treble" | "alto"
-  onChangeClef?(clef: "bass" | "treble" | "alto"): void
+  clef: Clef
+  onChangeClef?(clef: Clef): void
   streak: number
   outcome: Record<"correct" | "incorrect", number>
 }
