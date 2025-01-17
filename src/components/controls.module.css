@@ -9,4 +9,5 @@
 
 .panel > label > * {
   display: table-cell;
+  width: fit-content;
 }
