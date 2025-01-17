@@ -39,6 +39,7 @@ export function Key(props: KeyProps) {
   return (
     <li
       tabindex="0"
+      role="button"
       class={`${styles.key} ${props.class}`}
       onClick={() => props.onClick?.(props.kind)}
     />
