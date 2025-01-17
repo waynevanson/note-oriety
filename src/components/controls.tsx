@@ -16,22 +16,10 @@ export interface ControlProps {
 export function Controls(props: ControlProps) {
   return (
     <div class={styles.panel}>
-      <label for="input.key">
-        <span>Key Signature </span>
-        <select
-          name="input.key"
-          id="input.key"
-          onChange={(e) => {
-            props?.onChangeKeySignature?.(e.target.value as never)
-          }}
-        >
-          {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
-            <option value={sig} selected={props.keySignature == sig}>
-              {sig}
-            </option>
-          ))}
-        </select>
-      </label>
+      <KeySignatures
+        value={props.keySignature}
+        onChange={props.onChangeKeySignature}
+      />
       <label for="input.clef">
         <span> Clef </span>
         <select
@@ -53,5 +41,31 @@ export function Controls(props: ControlProps) {
         />
       </label>
     </div>
+  )
+}
+
+export interface KeySignaturesProps {
+  value: KeySignatureDistinctKeyed
+  onChange?(keySignature: KeySignatureDistinctKeyed): void
+}
+
+export function KeySignatures(props: KeySignaturesProps) {
+  return (
+    <label for="input.key">
+      <span>Key Signature </span>
+      <select
+        name="input.key"
+        id="input.key"
+        onChange={(e) => {
+          props?.onChange?.(e.target.value as never)
+        }}
+      >
+        {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
+          <option value={sig} selected={props.value == sig}>
+            {sig}
+          </option>
+        ))}
+      </select>
+    </label>
   )
 }
