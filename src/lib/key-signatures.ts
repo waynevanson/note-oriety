@@ -14,25 +14,13 @@ export type KeySignatureDistinctKeyed =
   | "F#"
   | "C#"
 
-// on the <KEY_SIGNATURE> scale,
-// to represent the actual note <NOTE>,
-// I would have to write it as <KEY>
-export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
-  KeySignatureDistinctKeyed,
+export type KeySignatureSharps = "G" | "D" | "A" | "E" | "B" | "F#" | "C#"
+export type KeySignatureFlats = "F" | "Bb" | "Ab" | "Eb" | "Db" | "Gb" | "Cb"
+
+export const KEY_SIGNATURE_FLATS_PITCH_CLASS_KIND: Record<
+  KeySignatureFlats,
   PitchClassMap<Key>
 > = {
-  C: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
-
-  // sharps
-  G: ["C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
-  D: ["Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
-  A: ["Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
-  E: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
-  B: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "An", "A", "B"],
-  "F#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "B"],
-  "C#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "Bn"],
-
-  // flats
   F: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Bn"],
   Bb: ["C", "Db", "D", "E", "En", "F", "Gb", "G", "Ab", "A", "B", "Bn"],
   Eb: ["C", "Db", "D", "E", "En", "F", "Gb", "G", "A", "An", "B", "Bn"],
@@ -40,6 +28,46 @@ export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
   Db: ["C", "D", "Dn", "E", "En", "F", "G", "Gn", "A", "An", "B", "Bn"],
   Gb: ["Cn", "D", "Dn", "E", "En", "F", "G", "Gn", "A", "An", "B", "C"],
   Cb: ["Cn", "D", "Dn", "E", "F", "Fn", "G", "Gn", "A", "An", "B", "C"],
+}
+
+export const KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND: Record<
+  KeySignatureSharps,
+  PitchClassMap<Key>
+> = {
+  G: ["C", "C#", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
+  D: ["Cn", "C", "D", "D#", "E", "Fn", "F", "G", "G#", "A", "A#", "B"],
+  A: ["Cn", "C", "D", "D#", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
+  E: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "A", "A#", "B"],
+  B: ["Cn", "C", "Dn", "D", "E", "Fn", "F", "Gn", "G", "An", "A", "B"],
+  "F#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "B"],
+  "C#": ["Cn", "C", "Dn", "D", "En", "E", "F", "Gn", "G", "An", "A", "Bn"],
+}
+
+export const KEY_SIGNATURE_C_PITCH_CLASS_KIND: PitchClassMap<Key> = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+]
+
+// on the <KEY_SIGNATURE> scale,
+// to represent the actual note <NOTE>,
+// I would have to write it as <KEY>
+export const KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY: Record<
+  KeySignatureDistinctKeyed,
+  PitchClassMap<Key>
+> = {
+  C: KEY_SIGNATURE_C_PITCH_CLASS_KIND,
+  ...KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND,
+  ...KEY_SIGNATURE_FLATS_PITCH_CLASS_KIND,
 }
 
 export const ACCIDENTALS: Record<KeySignatureDistinctKeyed, number> = {

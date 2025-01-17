@@ -1,5 +1,7 @@
 import {
   KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY,
+  KEY_SIGNATURE_FLATS_PITCH_CLASS_KIND,
+  KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND,
   KeySignatureDistinctKeyed,
 } from "../lib"
 import styles from "./controls.module.css"
@@ -53,6 +55,7 @@ export function KeySignatures(props: KeySignaturesProps) {
   return (
     <label for="input.key">
       <span>Key Signature </span>
+
       <select
         name="input.key"
         id="input.key"
@@ -60,11 +63,35 @@ export function KeySignatures(props: KeySignaturesProps) {
           props?.onChange?.(e.target.value as never)
         }}
       >
-        {Object.keys(KEY_SIGNATURE_DISTINCT_PITCH_CLASS_KEY).map((sig) => (
-          <option value={sig} selected={props.value == sig}>
-            {sig}
-          </option>
-        ))}
+        <optgroup label="Natural">
+          <option value="C">C</option>
+        </optgroup>
+
+        <optgroup label="Flats">
+          {Object.keys(KEY_SIGNATURE_FLATS_PITCH_CLASS_KIND).map(
+            (keySignature) => (
+              <option
+                value={keySignature}
+                selected={props.value == keySignature}
+              >
+                {keySignature}
+              </option>
+            )
+          )}
+        </optgroup>
+
+        <optgroup label="Sharps">
+          {Object.keys(KEY_SIGNATURE_SHARPS_PITCH_CLASS_KIND).map(
+            (keySignature) => (
+              <option
+                value={keySignature}
+                selected={props.value == keySignature}
+              >
+                {keySignature}
+              </option>
+            )
+          )}
+        </optgroup>
       </select>
     </label>
   )
