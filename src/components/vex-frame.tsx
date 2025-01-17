@@ -47,8 +47,8 @@ export function VexFrame(props: VexFlowProps) {
     const width = 100 + ACCIDENTALS[props.signature()] * 10
 
     // todo: make relative to height relative to the clefs we display.
-    const height = 120
-    const y = 10
+    const height = 110
+    const y = 20
     const viewport = `0 ${y} ${width} ${height - y}`
 
     const factory = new Factory({
