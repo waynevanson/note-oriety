@@ -12,6 +12,7 @@ import {
   random,
 } from "./lib"
 import "./reset.css"
+import { makePersisted } from "@solid-primitives/storage"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
@@ -46,8 +47,8 @@ const initialAppStore: AppStore = {
 }
 // todo: option to show chromatics
 export function App() {
-  const [store, storeSet] = createStore<AppStore>(
-    structuredClone(initialAppStore)
+  const [store, storeSet] = makePersisted(
+    createStore<AppStore>(structuredClone(initialAppStore))
   )
 
   const octave = createMemo(
