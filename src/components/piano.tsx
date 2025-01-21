@@ -1,16 +1,5 @@
-import { styled } from "solid-styled-components"
 import { PitchClassKind } from "../lib"
 import styles from "./piano.module.css"
-
-const Key_ = styled.li``
-
-const White = styled(Key_)`
-  background-color: #eee;
-`
-
-const Black = styled(Key_)`
-  background-color: #333;
-`
 
 export interface PianoProps {
   onClick?(kind: PitchClassKind): void
