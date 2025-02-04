@@ -20,7 +20,7 @@ export function ScoreBoard(props: ScoreBoardProps) {
 
       <div class={styles.accuracy}>
         <dt>Accuracy</dt>
-        <dd>{accuracy()}%</dd>
+        <dd class={styles["accuracy-text"]}>{accuracy()}%</dd>
       </div>
     </dl>
   )

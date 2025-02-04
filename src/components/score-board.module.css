@@ -10,3 +10,7 @@
 .list > div > * {
   display: table-cell;
 }
+
+.accuracy-text {
+  width: 4ch;
+}
