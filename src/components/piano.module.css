@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   aspect-ratio: 2.3;
+  flex: 0 1;
 }
 
 .key {
@@ -22,7 +23,7 @@
   background-color: #333;
   height: 55%;
   z-index: 2;
-  margin: 0 -50%;
+  margin: 0 -45%;
   filter: drop-shadow(0 0.3rem 0.2rem rgba(0, 0, 0, 0.2));
 }
 
