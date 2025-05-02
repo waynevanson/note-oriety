@@ -18,3 +18,17 @@
   display: grid;
   gap: 2rem;
 }
+
+.header {
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-settings {
+  border: 0;
+  border-radius: 0.5rem;
+  filter: drop-shadow();
+}

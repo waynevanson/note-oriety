@@ -1,4 +1,4 @@
-import { createMemo } from "solid-js"
+import { createMemo, Show } from "solid-js"
 import { createStore } from "solid-js/store"
 import "./App.css"
 import styles from "./App.module.css"
@@ -13,6 +13,8 @@ import {
 } from "./lib"
 import "./reset.css"
 import { makePersisted } from "@solid-primitives/storage"
+import { Portal } from "solid-js/web"
+import { Controls } from "./components/controls"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
@@ -34,6 +36,7 @@ export interface AppStore {
   showChromatics: boolean
   outcome: Record<"correct" | "incorrect", number>
   streak: number
+  showSettings: boolean
 }
 
 const initialAppStore: AppStore = {
@@ -44,6 +47,7 @@ const initialAppStore: AppStore = {
   showChromatics: true,
   streak: 0,
   clef: "treble",
+  showSettings: false,
 }
 
 export function App() {
@@ -108,6 +112,18 @@ export function App() {
 
   return (
     <main class={styles.main}>
+      <header class={styles.header}>
+        <nav class={styles.nav}>
+          <button
+            class={styles["nav-settings-button"]}
+            onClick={() => {
+              storeSet("showSettings", (show) => !show)
+            }}
+          >
+            Settings
+          </button>
+        </nav>
+      </header>
       <VexFrame
         pitchClassKind={() => store.pitchClassKind}
         signature={() => store.signature}
@@ -116,19 +132,21 @@ export function App() {
       />
 
       <div class={styles.inputs}>
-        <Panel
+        <Panel outcome={store.outcome} streak={store.streak} />
+        <Piano onClick={(kind) => handleGuess(kind)} />
+      </div>
+
+      <dialog open={store.showSettings} class={styles["nav-settings"]}>
+        <Controls
           chromatics={store.showChromatics}
           clef={store.clef}
           keySignature={store.signature}
-          outcome={store.outcome}
-          streak={store.streak}
           onChangeChromatics={handleOnChangeChromatics}
           onChangeClef={handleOnChangeClef}
           onChangeKeySignature={handleOnChangeKeySignature}
           onClickReset={handleOnClickReset}
         />
-        <Piano onClick={(kind) => handleGuess(kind)} />
-      </div>
+      </dialog>
     </main>
   )
 }
