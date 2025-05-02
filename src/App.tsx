@@ -14,6 +14,7 @@ import {
   random,
 } from "./lib"
 import "./reset.css"
+import { createEventListener } from "@solid-primitives/event-listener"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
@@ -53,6 +54,8 @@ export function App() {
   const [store, storeSet] = makePersisted(
     createStore<AppStore>(structuredClone(initialAppStore))
   )
+
+  let dialogRef: HTMLDialogElement | undefined
 
   const octave = createMemo(
     () => (store.altoOctave + ALTO_CLEF_OFFSET_MAP[store.clef]) as Octave
@@ -109,6 +112,16 @@ export function App() {
     storeSet(structuredClone(initialAppStore))
   }
 
+  createEventListener(
+    () => window.document,
+    "click",
+    (event) => {
+      if (dialogRef?.contains(event.target! as Node)) return
+      storeSet("showSettings", false)
+    },
+    { capture: true }
+  )
+
   return (
     <main class={styles.main}>
       <header class={styles.header}>
@@ -135,7 +148,11 @@ export function App() {
         <Piano onClick={(kind) => handleGuess(kind)} />
       </div>
 
-      <dialog open={store.showSettings} class={styles["nav-settings"]}>
+      <dialog
+        ref={dialogRef}
+        open={store.showSettings}
+        class={styles["nav-settings"]}
+      >
         <Controls
           chromatics={store.showChromatics}
           clef={store.clef}
