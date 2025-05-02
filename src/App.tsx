@@ -1,7 +1,9 @@
-import { createMemo, Show } from "solid-js"
+import { makePersisted } from "@solid-primitives/storage"
+import { createMemo } from "solid-js"
 import { createStore } from "solid-js/store"
 import "./App.css"
 import styles from "./App.module.css"
+import { Controls } from "./components/controls"
 import { Panel } from "./components/panel"
 import { Piano } from "./components/piano"
 import { Clef, VexFrame } from "./components/vex-frame"
@@ -12,9 +14,6 @@ import {
   random,
 } from "./lib"
 import "./reset.css"
-import { makePersisted } from "@solid-primitives/storage"
-import { Portal } from "solid-js/web"
-import { Controls } from "./components/controls"
 
 export type Octave = 2 | 3 | 4 | 5 | 6
 
